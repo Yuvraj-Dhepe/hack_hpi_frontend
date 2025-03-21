@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
+import { styles, COLORS } from './styles';
 
 export default function Greeting() {
   return (
@@ -13,18 +14,3 @@ export default function Greeting() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
-  subtitle: {
-    fontSize: 18,
-    opacity: 0.8,
-  },
-});

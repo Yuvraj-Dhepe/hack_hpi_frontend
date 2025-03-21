@@ -5,6 +5,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { styled } from 'nativewind';
 import { Link } from 'expo-router';
+import { styles, COLORS } from './styles';
 
 import Question from './utility';
 
@@ -37,56 +38,3 @@ export default function QuestionnaireScreen() {
     </ThemedView>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  questionContainer: {
-    marginBottom: 20,
-  },
-  questionText: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  optionButton: {
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: '#e0e0e0',
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  optionButtonSelected: {
-    backgroundColor: '#1EB1FC',
-  },
-  optionButtonText: {
-    textAlign: 'center',
-    color: '#000',
-  },
-  slider: {
-    width: '100%',
-    height: 40,
-    marginTop: 10,
-  },
-  button: {
-    backgroundColor: '#1EB1FC',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-});

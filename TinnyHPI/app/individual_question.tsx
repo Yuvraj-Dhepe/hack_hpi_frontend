@@ -4,12 +4,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { styled } from 'nativewind';
 import { Link } from 'expo-router';
-import BedTimeIcon from '@mui/icons-material/BedTime'; // Ensure to import the icon correctly
+import { Bedtime } from '@mui/icons-material';
 import Question from './utility'; // Assuming this is your input component
+import { styles, COLORS } from './styles';
 
 const questionConfig = {
   bedtime: {
-    icon: "tmp",//<BedTimeIcon />,
+    icon: <Bedtime />,
     title: "Bedtime Question",
     question: "What time did you go to bed?",
     inputType: "text"
@@ -44,29 +45,3 @@ export default function IndividualQuestion({ id }) {
     </ThemedView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  questionText: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: '#1EB1FC',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-});

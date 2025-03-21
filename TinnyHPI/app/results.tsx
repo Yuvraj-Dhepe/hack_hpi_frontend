@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
+import { styles, COLORS } from './styles';
 
 export default function Results() {
   const [intervention1, setIntervention1] = useState('Intervention A');
@@ -66,39 +67,3 @@ export default function Results() {
   );
 }
 
-const styles = StyleSheet.create({
-  intervention: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    width: '100%',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-  },
-  barContainer: {
-    backgroundColor: 'grey',
-    borderRadius: 5,
-    height: 20,
-    marginBottom: 10,
-    overflow: 'hidden', // Ensures the bar does not overflow
-  },
-  bar: {
-    backgroundColor: 'green', // Change the color of the bar as needed
-    height: '100%',
-  },
-});
