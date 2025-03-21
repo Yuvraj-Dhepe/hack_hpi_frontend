@@ -5,12 +5,12 @@ import { StyleSheet } from 'react-native';
 export const COLORS = {
   background: "#f5f4f9",
     yellow: "#f2dd8e",
-    beige: "#f2dd8e",
+    beige: "#f1e6df",
     lightblue: "#bfc9f8",
     red: "#bfc9f8",
     green: "#bfc9f8",
     blue: "#bfc9f8",
-    offwhite: "#bfc9f8",
+    offwhite: "#fdfdfd",
     white: "#ffffff",
     black: "#131313",
     darkbeige: "#eddbd1",
@@ -26,13 +26,20 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   title: {
+    fontFamily: 'Poppins_400Regular',
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 'thin',
     color: COLORS.textPrimary,
-    marginBottom: 20,
+  },
+  titleBold: {
+    fontFamily: 'Poppins_400Regular',
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: COLORS.textPrimary,
+    marginBottom: 10,
   },
   button: {
-    backgroundColor: COLORS.offwhite,
+    backgroundColor: COLORS.beige,
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
@@ -44,9 +51,30 @@ export const styles = StyleSheet.create({
   input:{
     padding: 10,
     margin: 5,
-    borderRadius: 5,
-    backgroundColor: COLORS.background,
-    borderColor: COLORS.textPrimary,
-    borderWidth: 1
-  }
+    borderRadius: 15,
+    backgroundColor: COLORS.offwhite,
+    borderWidth: 0
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+    buttonGroupButton: {
+        backgroundColor: COLORS.offwhite,
+        padding: 15,
+        borderRadius: 15,
+        alignItems: 'center',
+        width: '45%',
+    },
+    optionButton: {
+        backgroundColor: COLORS.offwhite,
+        padding: 15,
+        margin: 5,
+        borderRadius: 25,
+        alignItems: 'center',
+        width: '16%',
+    },
+    optionButtonSelected: {
+        backgroundColor: COLORS.yellow,
+    },
 });

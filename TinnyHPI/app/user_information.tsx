@@ -18,7 +18,10 @@ export default function UserInformation() {
     return (
         <ThemedView style={styles.container}>
         <ThemedText type="title" style={styles.title}>
-            User Information
+            Please Enter your
+        </ThemedText>
+        <ThemedText type="title" style={styles.titleBold}>
+            Information
         </ThemedText>
         
         <Question title="What is your name?" value={name} setValue={setName} inputType="text"/>

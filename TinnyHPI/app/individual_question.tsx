@@ -4,13 +4,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { styled } from 'nativewind';
 import { Link } from 'expo-router';
-import { Bedtime } from '@mui/icons-material';
+//import { Bedtime } from '@mui/icons-material';
 import Question from './utility'; // Assuming this is your input component
 import { styles, COLORS } from './styles';
 
 const questionConfig = {
   bedtime: {
-    icon: <Bedtime />,
+    icon: "tmp",//<Bedtime />,
     title: "Bedtime Question",
     question: "What time did you go to bed?",
     inputType: "text"
