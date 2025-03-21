@@ -6,13 +6,13 @@ import Greeting from './Greetings';
 import UserInformation from './user_information';
 import QuestionnaireScreen from './questionaire';
 import Feedback from './feedback';
+import Results from './results';
 
 
 export default function HomeScreen() {
   return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Greeting />
-        <Feedback/>
+        <Results/>
       </ScrollView>
   );
 }
