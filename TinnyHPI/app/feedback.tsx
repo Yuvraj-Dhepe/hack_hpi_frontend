@@ -22,7 +22,7 @@ export default function Feedback() {
       
       <Question title="How helpful was the intervention?" value={feedback} setValue={setFeedback} inputType="slider" />
       
-      <Link href="/">
+      <Link href="/home">
         <TouchableOpacity style={styles.button}>
           <ThemedText style={styles.buttonText}>Submit</ThemedText>
         </TouchableOpacity>

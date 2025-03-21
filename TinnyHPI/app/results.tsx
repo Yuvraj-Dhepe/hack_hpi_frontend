@@ -57,7 +57,7 @@ export default function Results() {
       </ThemedText>
       {renderProbabilityBar(probability3)}
 
-      <Link href="/">
+      <Link href="/feedback">
         <TouchableOpacity style={styles.button}>
           <ThemedText style={styles.buttonText}>Submit</ThemedText>
         </TouchableOpacity>

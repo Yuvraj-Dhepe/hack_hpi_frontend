@@ -24,7 +24,7 @@ export default function UserInformation() {
         <Question title="How old are you?" value={age} setValue={setAge} inputType="number"/>
         <Question title="What is your sex?" value={sex} setValue={setSex} inputType="button" options={["m","f","d"]}/>
 
-        <Link href="/">
+        <Link href="/home">
                 <TouchableOpacity style={styles.button}>
                   <ThemedText style={styles.buttonText}>Submit</ThemedText>
                 </TouchableOpacity>

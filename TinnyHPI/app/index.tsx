@@ -1,27 +1,16 @@
-import { StyleSheet, ScrollView } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
-import Greeting from './Greetings';
-import UserInformation from './user_information';
-import QuestionnaireScreen from './questionaire';
-import Feedback from './feedback';
-import Results from './results';
+import { useEffect } from 'react';
+import { useRouter, useRootNavigationState } from 'expo-router';
 
+export default function HomeRedirect() {
+  const router = useRouter();
+  const navigationState = useRootNavigationState();
 
-export default function HomeScreen() {
-  return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <Results/>
-      </ScrollView>
-  );
+  useEffect(() => {
+    if (navigationState?.key) {
+      // only redirect when navigation is mounted
+      router.replace('/user_information');
+    }
+  }, [navigationState]);
+
+  return null; // optionally render a loading view
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  opacity: {
-    opacity: 0,
-  }
-});

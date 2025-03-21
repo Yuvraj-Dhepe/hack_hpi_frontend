@@ -29,7 +29,7 @@ export default function QuestionnaireScreen() {
       <Question title="How loud is your environment?" value={environmentNoise} setValue={setEnvironmentNoise} inputType="slider" />
       <Question title="Have you consumed caffeine, alcohol, or nicotine today?" value={substanceConsumption} setValue={setSubstanceConsumption} inputType="buttons" />
       
-      <Link href="/">
+      <Link href="/results">
         <TouchableOpacity style={styles.button}>
           <ThemedText style={styles.buttonText}>Submit</ThemedText>
         </TouchableOpacity>
