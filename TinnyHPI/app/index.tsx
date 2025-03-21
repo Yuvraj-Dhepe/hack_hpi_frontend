@@ -8,7 +8,7 @@ export default function HomeRedirect() {
   useEffect(() => {
     if (navigationState?.key) {
       // only redirect when navigation is mounted
-      router.replace('/user_information');
+      router.replace('/start');
     }
   }, [navigationState]);
 
