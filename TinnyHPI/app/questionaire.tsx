@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import  Slider from '@mui/material/Slider';
+import Slider from '@react-native-community/slider';
 import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -11,8 +11,8 @@ const levels = ["Low", "Moderate", "High"];
 export default function QuestionnaireScreen() {
   const [tinnitusLevel, setTinnitusLevel] = useState(null);
   const [stressLevel, setStressLevel] = useState(null);
-  const [sleepQuality, setSleepQuality] = useState(null);
-  const [environmentNoise, setEnvironmentNoise] = useState(null);
+  const [sleepQuality, setSleepQuality] = useState(2);
+  const [environmentNoise, setEnvironmentNoise] = useState(2);
   const [substanceConsumption, setSubstanceConsumption] = useState(null);
 
   return (
@@ -42,16 +42,15 @@ function Question({ title, value, setValue, inputType }) {
       case 'slider':
         return (
           <Slider
-          aria-label="Temperature"
-          defaultValue={30}
-          getAriaValueText={value}
-          valueLabelDisplay="auto"
-          shiftStep={30}
-          step={10}
-          marks
-          min={10}
-          max={110}
-        />
+            style={styles.slider}
+            minimumValue={1}
+            maximumValue={5}
+            value={value}
+            onValueChange={setValue}
+            minimumTrackTintColor="#A1CEDC"
+            maximumTrackTintColor="#D0D0D0"
+            thumbTintColor="#1D3D47"
+          />
         );
       case 'buttons':
       default:

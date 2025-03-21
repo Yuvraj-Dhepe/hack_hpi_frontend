@@ -1,17 +1,7 @@
-<<<<<<< Updated upstream:TinnyHPI/app/index.tsx
-import { StyleSheet, ScrollView } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
-import Greeting from './Greetings';
-import UserInformation from './user_information';
-import QuestionnaireScreen from './questionaire';
-=======
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
->>>>>>> Stashed changes:TinnyHPI/app/(tabs)/index.tsx
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
@@ -51,12 +41,6 @@ export default function HomeScreen() {
   };
   
   return (
-<<<<<<< Updated upstream:TinnyHPI/app/index.tsx
-      <ScrollView contentContainerStyle={styles.container}>
-        <Greeting />
-        <QuestionnaireScreen/>
-      </ScrollView>
-=======
     <ThemedView style={styles.container}>
       <View style={styles.userIconContainer}>
         <IconSymbol name="house.fill" size={40} color="#A1CEDC" />
@@ -74,7 +58,6 @@ export default function HomeScreen() {
         <ThemedText style={styles.buttonText}>Proceed</ThemedText>
       </TouchableOpacity>
     </ThemedView>
->>>>>>> Stashed changes:TinnyHPI/app/(tabs)/index.tsx
   );
 }
 
