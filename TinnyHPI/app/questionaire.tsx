@@ -21,20 +21,22 @@ export default function QuestionnaireScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title" style={styles.title}>
-        Tinnitus Questionnaire
+        How are you feeling today?
       </ThemedText>
       
-      <Question title="How loud is your tinnitus?" value={tinnitusLevel} setValue={setTinnitusLevel} inputType="buttons" />
-      <Question title="How stressed are you?" value={stressLevel} setValue={setStressLevel} inputType="buttons" />
+      <Question title="How loud is your tinnitus?" value={tinnitusLevel} setValue={setTinnitusLevel} inputType="buttonsWider"/>
+      <Question title="How stressed are you?" value={stressLevel} setValue={setStressLevel} inputType="buttonsWider" />
       <Question title="How would you rate your sleep?" value={sleepQuality} setValue={setSleepQuality} inputType="slider" />
       <Question title="How loud is your environment?" value={environmentNoise} setValue={setEnvironmentNoise} inputType="slider" />
-      <Question title="Have you consumed caffeine, alcohol, or nicotine today?" value={substanceConsumption} setValue={setSubstanceConsumption} inputType="buttons" />
+      <Question title="Have you consumed caffeine, alcohol, or nicotine today?" value={substanceConsumption} setValue={setSubstanceConsumption} inputType="buttonsWider" />
       
+      <View style={{ flex: 1, justifyContent: 'start', alignItems: 'center' }}>
       <Link href="/results">
         <TouchableOpacity style={styles.button}>
           <ThemedText style={styles.buttonText}>Submit</ThemedText>
         </TouchableOpacity>
       </Link>
+      </View>
     </ThemedView>
   );
 }

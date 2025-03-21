@@ -40,7 +40,7 @@ export default function Results() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title" style={styles.title}>
-        Results
+        We have some <b>suggestions</b> for you!
       </ThemedText>
       
       <ThemedText style={styles.intervention}>

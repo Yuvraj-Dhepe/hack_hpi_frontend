@@ -38,6 +38,27 @@ export default function Question({ title, value, setValue, inputType, options })
               max={110}
             />
           );
+        case 'buttonsWider':
+            if (options == null) {
+                options = levels;
+            }
+          return (
+            <View style={styles.buttonGroupWide}>
+              {options.map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={[
+                    styles.optionButtonWide,
+                    value === option && styles.optionButtonSelected,
+                  ]}
+                  onPress={() => setValue(option)}
+                >
+                  <ThemedText style={styles.optionButtonText}>{option}</ThemedText>
+                </TouchableOpacity>
+              ))}
+            </View>
+          );
+        
         case 'buttons':
             if (options == null) {
                 options = levels;

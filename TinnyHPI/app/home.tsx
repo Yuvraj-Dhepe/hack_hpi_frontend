@@ -6,8 +6,8 @@ import { styles, COLORS } from './styles';
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hello Sara!</Text>
-      <Text>Welcome to ToneDown!</Text>
+      <Text style={styles.title}>Hello <b>Sara</b>!</Text>
+      <Text style={styles.text}>Welcome to ToneDown!</Text>
       <Link href="/questionaire">
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Intervention</Text>

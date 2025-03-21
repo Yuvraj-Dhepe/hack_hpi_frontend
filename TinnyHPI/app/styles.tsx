@@ -42,6 +42,7 @@ export const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
+    marginBottom: 10,
   },
   titleContainer: {
     flexDirection: 'row', // Arrange elements side by side
@@ -70,6 +71,7 @@ export const styles = StyleSheet.create({
   buttonGroup: {
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 10,
   },
     buttonGroupButton: {
         backgroundColor: COLORS.offwhite,
@@ -85,6 +87,26 @@ export const styles = StyleSheet.create({
         borderRadius: 25,
         alignItems: 'center',
         width: '16%',
+    },
+    buttonGroupWide: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 10,
+    },
+    buttonGroupWideButton: {
+        backgroundColor: COLORS.offwhite,
+        padding: 15,
+        borderRadius: 15,
+        alignItems: 'center',
+        width: '45%',
+    },
+    optionButtonWide: {
+        backgroundColor: COLORS.offwhite,
+        padding: 15,
+        margin: 5,
+        borderRadius: 25,
+        alignItems: 'center',
+        width: '30%',
     },
     optionButtonSelected: {
         backgroundColor: COLORS.yellow,
