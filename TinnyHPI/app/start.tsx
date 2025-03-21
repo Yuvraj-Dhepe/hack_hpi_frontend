@@ -10,7 +10,7 @@ export default function Start() {
   return (
     <ThemedView style={styles.container}>
         <ThemedText type="title" style={styles.title}>
-            Welcome to AppName!
+            Welcome to ToneDown!
         </ThemedText>
         <ThemedText type="default" >
             This app will help with you tinnitus by proposing interventions. 

@@ -4,12 +4,19 @@ import { Link } from 'expo-router';
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hello</Text>
+      <Text style={styles.title}>Hello Sara!</Text>
+      <Text>Welcome to ToneDown!</Text>
       <Link href="/questionaire">
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Intervention</Text>
         </TouchableOpacity>
       </Link>
+      <Link href="/interventions">
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Learn about how interventions work</Text>
+        </TouchableOpacity>
+      </Link>
+
     </View>
   );
 }
