@@ -22,7 +22,7 @@ export default function UserInformation() {
         
         <Question title="What is your name?" value={name} setValue={setName} inputType="text"/>
         <Question title="How old are you?" value={age} setValue={setAge} inputType="number"/>
-        <Question title="What is your sex?" value={sex} setValue={setSex} inputType="button"/>
+        <Question title="What is your sex?" value={sex} setValue={setSex} inputType="button" options={["m","f","d"]}/>
 
         <Link href="/">
                 <TouchableOpacity style={styles.button}>

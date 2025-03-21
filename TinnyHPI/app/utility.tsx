@@ -5,67 +5,69 @@ import { ThemedText } from '@/components/ThemedText';
 const levels = ["Low", "Moderate", "High"];
 const gender = ["m", "f", "d"];
 
-export default function Question({ title, value, setValue, inputType }) {
-  const renderInput = () => {
-    switch (inputType) {
+export default function Question({ title, value, setValue, inputType, options }) {
+    const renderInput = () => {
+      switch (inputType) {
         case 'text':
-            return (
+          return (
             <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={setValue}
+              style={styles.input}
+              value={value}
+              onChangeText={setValue}
             />
-            );
+          );
         case 'number':
-            return (
+          return (
             <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={setValue}
+              style={styles.input}
+              value={value}
+              onChangeText={setValue}
             />
-            );
-      case 'slider':
-        return (
-          <Slider
-          aria-label="Temperature"
-          defaultValue={30}
-          getAriaValueText={value}
-          valueLabelDisplay="auto"
-          shiftStep={30}
-          step={10}
-          marks
-          min={10}
-          max={110}
-        />
-        );
-      case 'buttons':
-      default:
-        return (
-          <View style={styles.buttonGroup}>
-            {levels.map((level) => (
-              <TouchableOpacity
-                key={level}
-                style={[
-                  styles.optionButton,
-                  value === level && styles.optionButtonSelected,
-                ]}
-                onPress={() => setValue(level)}
-              >
-                <ThemedText style={styles.optionButtonText}>{level}</ThemedText>
-              </TouchableOpacity>
-            ))}
-          </View>
-        );
-    }
-  };
-
-  return (
-    <View style={styles.questionContainer}>
-      <ThemedText style={styles.questionText}>{title}</ThemedText>
-      {renderInput()}
-    </View>
-  );
-}
+          );
+        case 'slider':
+          return (
+            <Slider
+              aria-label="Temperature"
+              defaultValue={30}
+              getAriaValueText={value}
+              valueLabelDisplay="auto"
+              step={10}
+              marks
+              min={10}
+              max={110}
+            />
+          );
+        case 'buttons':
+            if (options == null) {
+                options = levels;
+            }
+        default:
+          return (
+            <View style={styles.buttonGroup}>
+              {options.map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={[
+                    styles.optionButton,
+                    value === option && styles.optionButtonSelected,
+                  ]}
+                  onPress={() => setValue(option)}
+                >
+                  <ThemedText style={styles.optionButtonText}>{option}</ThemedText>
+                </TouchableOpacity>
+              ))}
+            </View>
+          );
+      }
+    };
+  
+    return (
+      <View style={styles.questionContainer}>
+        <ThemedText style={styles.questionText}>{title}</ThemedText>
+        {renderInput()}
+      </View>
+    );
+  }
 
 const styles = StyleSheet.create({
     input: {
