@@ -90,7 +90,17 @@ def run_hierarchical_model(user_data, stan_file='hier_reg.stan',
     fit = model.sample(data=data, iter_sampling=iter_sampling, iter_warmup=iter_warmup, chains=chains)
 
     theta_draws = fit.stan_variable("theta") # (n_draws*n_chains, M, J)
-    return theta_draws
+
+    M = theta_draws.shape[1]
+    J = theta_draws.shape[2]
+    proportions = np.empty((M, J))
+    for m in range(M):
+        # For user m, find which treatment has the maximum effect for each draw
+        best_arm = np.argmax(theta_draws[:, m, :], axis=1)
+        counts = np.bincount(best_arm, minlength=J)
+        proportions[m, :] = counts / (iter_sampling*chains)
+
+    return theta_draws, proportions
 
 # # Example usage:
 # if __name__ == '__main__':

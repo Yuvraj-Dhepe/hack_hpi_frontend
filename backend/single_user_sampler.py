@@ -65,8 +65,15 @@ def draw_posterior_theta(Y, X, D, n_draws=1000):
     
     # Draw samples from N(mu_theta_post, Sigma_theta_post)
     samples = np.random.multivariate_normal(mu_theta_post, Sigma_theta_post, size=n_draws)
-    
-    return samples
+
+    # obtain the posterior likelihood of being the best treatment
+    best_arm = np.argmax(samples, axis=1)
+    counts = np.bincount(best_arm)
+    posterior_best = counts / n_draws
+
+    return samples, posterior_best
+
+
 
 # # Example usage (with made-up parameters):
 # if __name__ == '__main__':
