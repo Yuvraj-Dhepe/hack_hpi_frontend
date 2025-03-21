@@ -2,6 +2,7 @@
 ## exploits full conjugacy of a Gaussian prior and Gaussian likelihood model.
 
 import numpy as np
+import json
 
 # MAIN FUNCTION
 def draw_posterior_theta(Y, X, D, n_draws=1000):

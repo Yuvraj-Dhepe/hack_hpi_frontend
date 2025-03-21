@@ -55,7 +55,7 @@ def prepare_hierarchical_data(user_data, sigma=1.0):
     return data
 
 # AUXILIARY FUNCTION
-def load_model(stan_file='hierarchical_model.stan'):
+def load_model(stan_file='hier_reg.stan'):
     """
     Compile the Stan model.
     
