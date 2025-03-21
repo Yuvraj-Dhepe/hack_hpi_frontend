@@ -36,13 +36,25 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
     color: COLORS.textPrimary,
-    marginBottom: 10,
   },
   button: {
     backgroundColor: COLORS.beige,
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
+  },
+  titleContainer: {
+    flexDirection: 'row', // Arrange elements side by side
+    flexWrap: 'wrap', // Allow wrapping when needed
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10, // Add spacing between elements
+    marginBottom: 10,
+    backgroundColor: COLORS.background,
+  },
+  text: {
+    color: COLORS.textPrimary,
+    marginBottom: 10,
   },
   buttonText: {
     color: COLORS.textPrimary,

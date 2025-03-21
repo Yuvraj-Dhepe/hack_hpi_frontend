@@ -17,12 +17,14 @@ export default function UserInformation() {
 
     return (
         <ThemedView style={styles.container}>
-        <ThemedText type="title" style={styles.title}>
-            Please Enter your
-        </ThemedText>
-        <ThemedText type="title" style={styles.titleBold}>
-            Information
-        </ThemedText>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title" style={styles.title}>
+              Please Enter your
+          </ThemedText>
+          <ThemedText type="title" style={styles.titleBold}>
+              Information
+          </ThemedText>
+          </ThemedView>
         
         <Question title="What is your name?" value={name} setValue={setName} inputType="text"/>
         <Question title="How old are you?" value={age} setValue={setAge} inputType="number"/>
