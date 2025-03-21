@@ -111,4 +111,19 @@ export const styles = StyleSheet.create({
     optionButtonSelected: {
         backgroundColor: COLORS.yellow,
     },
+    intervention: {
+        fontSize: 18,
+        marginBottom: 10,
+      },
+      barContainer: {
+        backgroundColor: COLORS.beige, // Change the color of the bar container as needed
+        borderRadius: 5,
+        height: 20,
+        marginBottom: 10,
+        overflow: 'hidden', // Ensures the bar does not overflow
+      },
+      bar: {
+        backgroundColor: COLORS.red, // Change the color of the bar as needed
+        height: '100%',
+      },
 });
