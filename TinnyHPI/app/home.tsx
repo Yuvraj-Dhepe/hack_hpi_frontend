@@ -1,15 +1,15 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
-  const router = useRouter();
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Hello</Text>
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/questionaire')}>
-        <Text style={styles.buttonText}>Go to Questionnaire</Text>
-      </TouchableOpacity>
+      <Link href="/questionaire">
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Intervention</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
