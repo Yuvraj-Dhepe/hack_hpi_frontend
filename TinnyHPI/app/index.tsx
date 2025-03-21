@@ -5,13 +5,14 @@ import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 import Greeting from './Greetings';
 import UserInformation from './user_information';
 import QuestionnaireScreen from './questionaire';
+import Feedback from './feedback';
 
 
 export default function HomeScreen() {
   return (
       <ScrollView contentContainerStyle={styles.container}>
         <Greeting />
-        <UserInformation/>
+        <Feedback/>
       </ScrollView>
   );
 }
