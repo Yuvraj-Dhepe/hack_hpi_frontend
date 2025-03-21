@@ -11,7 +11,7 @@ export default function HomeScreen() {
   return (
       <ScrollView contentContainerStyle={styles.container}>
         <Greeting />
-        <QuestionnaireScreen/>
+        <UserInformation/>
       </ScrollView>
   );
 }

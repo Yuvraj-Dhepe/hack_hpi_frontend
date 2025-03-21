@@ -1,10 +1,12 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import  Slider from '@mui/material/Slider';
+
 import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { styled } from 'nativewind';
 import { Link } from 'expo-router';
+
+import Question from './utility';
 
 const levels = ["Low", "Moderate", "High"];
 
@@ -36,51 +38,6 @@ export default function QuestionnaireScreen() {
   );
 }
 
-function Question({ title, value, setValue, inputType }) {
-  const renderInput = () => {
-    switch (inputType) {
-      case 'slider':
-        return (
-          <Slider
-          aria-label="Temperature"
-          defaultValue={30}
-          getAriaValueText={value}
-          valueLabelDisplay="auto"
-          shiftStep={30}
-          step={10}
-          marks
-          min={10}
-          max={110}
-        />
-        );
-      case 'buttons':
-      default:
-        return (
-          <View style={styles.buttonGroup}>
-            {levels.map((level) => (
-              <TouchableOpacity
-                key={level}
-                style={[
-                  styles.optionButton,
-                  value === level && styles.optionButtonSelected,
-                ]}
-                onPress={() => setValue(level)}
-              >
-                <ThemedText style={styles.optionButtonText}>{level}</ThemedText>
-              </TouchableOpacity>
-            ))}
-          </View>
-        );
-    }
-  };
-
-  return (
-    <View style={styles.questionContainer}>
-      <ThemedText style={styles.questionText}>{title}</ThemedText>
-      {renderInput()}
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {

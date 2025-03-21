@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { styled } from 'nativewind';
+import { Link } from 'expo-router';
 
-const gender = ["m", "f", "d"];
-const levels = ["Low", "Moderate", "High"];
-
+import Question from './utility';
 
 // get user input like name, age, sex, etc. to set up the user's profile
 
@@ -21,33 +20,18 @@ export default function UserInformation() {
             User Information
         </ThemedText>
         
-        <Question title="What is your name?" value={name} setValue={setName} />
-        <Question title="How old are you?" value={age} setValue={setAge} />
-        <Question title="What is your sex?" value={sex} setValue={setSex} />
-        </ThemedView>
-    );
-}
+        <Question title="What is your name?" value={name} setValue={setName} inputType="text"/>
+        <Question title="How old are you?" value={age} setValue={setAge} inputType="number"/>
+        <Question title="What is your sex?" value={sex} setValue={setSex} inputType="button"/>
 
-function Question({ title, value, setValue }) {
-  return (
-    <View style={styles.questionContainer}>
-      <ThemedText style={styles.questionText}>{title}</ThemedText>
-      <View style={styles.buttonGroup}>
-        {levels.map((level) => (
-          <TouchableOpacity
-            key={level}
-            style={[
-              styles.optionButton,
-              value === level && styles.optionButtonSelected,
-            ]}
-            onPress={() => setValue(level)}
-          >
-            <ThemedText style={styles.optionButtonText}>{level}</ThemedText>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
-  );
+        <Link href="/">
+                <TouchableOpacity style={styles.button}>
+                  <ThemedText style={styles.buttonText}>Submit</ThemedText>
+                </TouchableOpacity>
+        </Link>
+        </ThemedView>
+        
+    );
 }
 
 
