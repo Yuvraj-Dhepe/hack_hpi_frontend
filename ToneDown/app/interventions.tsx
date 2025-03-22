@@ -52,7 +52,7 @@ export default function HomeScreen() {
 
         <View style={styles.cardsContainer}>
           {categories.map((category, index) => (
-            <Link key={category.id} href="/home" asChild>
+            <Link key={category.id} href={category.route} asChild>
               <TouchableOpacity 
                style={{
                 ...styles.card, 
