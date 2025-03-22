@@ -5,6 +5,8 @@ import { ThemedView } from '@/components/ThemedView';
 import { styled } from 'nativewind';
 import { Link } from 'expo-router';
 import { styles, COLORS } from './styles';
+import BottomNav from './BottomNav'; // Import BottomNav
+
 
 import Question from './utility';
 
@@ -16,6 +18,7 @@ export default function UserInformation() {
   const [sex, setSex] = useState('');
 
     return (
+      <View style={{height: '100%'}}>
         <ThemedView style={localStyle.container}>
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title" style={styles.title}>
@@ -38,6 +41,9 @@ export default function UserInformation() {
         </Link>
         </View>
         </ThemedView>
+          <BottomNav /> {/* Include BottomNav */}
+        </View>
+
         
     );
 }
@@ -50,5 +56,6 @@ const localStyle = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.background,
     padding: 20,
+    height: '76%',
   }
 });

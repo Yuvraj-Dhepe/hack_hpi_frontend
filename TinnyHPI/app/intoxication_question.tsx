@@ -5,12 +5,15 @@ import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import Question from './utility';
+import BottomNav from './BottomNav'; // Import BottomNav
+
 
 export default function IntoxicationQuestion() {
   const [selectedIntoxication, setSelectedIntoxication] = useState(null);
   const intoxicationOptions = ["Alcohol", "Drugs", "Smoke", "Am Clean"];
 
   return (
+    <View style={{height: '100%'}}>
     <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
       <View style={styles.cardContainer}>
         <View style={styles.circleIconContainer}>
@@ -47,6 +50,8 @@ export default function IntoxicationQuestion() {
         </Link>
       </View>
     </ThemedView>
+    <BottomNav /> {/* Include BottomNav */}
+    </View>
   );
 }
 
