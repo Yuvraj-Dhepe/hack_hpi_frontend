@@ -79,6 +79,7 @@ coverage/
 # Python
 __pycache__/
 *.pyc
+*.csv
 
 # Project specific
 app-example/

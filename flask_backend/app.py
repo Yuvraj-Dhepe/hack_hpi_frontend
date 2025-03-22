@@ -84,26 +84,24 @@ def get_analysis():
 
         print(f"Processing analysis request for user: {user_id}")
 
-        # Read the CSV file containing all user data
-        filepath = os.path.join(UPLOAD_DIR, "tinnitus_data.csv")
-        if not os.path.exists(filepath):
-            print(f"Error: No data file found at {filepath}")
+        # Read both regular and feedback data
+        regular_filepath = os.path.join(UPLOAD_DIR, "tinnitus_data.csv")
+        feedback_filepath = os.path.join(UPLOAD_DIR, "tinnitus_data_feedback.csv")
+
+        if not os.path.exists(regular_filepath):
+            print(f"Error: No data file found at {regular_filepath}")
             return jsonify({
                 'error': 'No data available for analysis',
                 'message': 'Please upload data first'
             }), 404
 
-        # Read the database
-        database_pull = pd.read_csv(filepath)
-        print(f"Found {len(database_pull)} records in database")
+        # Read and combine the data
+        database_pull = pd.read_csv(regular_filepath)
+        if os.path.exists(feedback_filepath):
+            feedback_data = pd.read_csv(feedback_filepath)
+            database_pull = pd.concat([database_pull, feedback_data], ignore_index=True)
 
-        # Check if user exists in database
-        if user_id not in database_pull['uid'].values:
-            print(f"Error: User {user_id} not found in database")
-            return jsonify({
-                'error': 'User not found',
-                'message': f'No data found for user {user_id}'
-            }), 404
+        print(f"Found {len(database_pull)} total records in database")
 
         # Run the backend analysis
         _, diagnosis_probabilities = backend_call(user_id, database_pull)

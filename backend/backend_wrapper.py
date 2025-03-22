@@ -90,23 +90,16 @@ def is_user_private(user_data):
 def extract_user_reg_data(user_data):
     """
     Extract the outcome, covariates, and treatment indicators from the user data.
-
-    Parameters:
-    user_data (pd.DataFrame): DataFrame containing the user's data, filtered by userid.
-
-    Returns:
-    tuple: A tuple containing the outcome array Y, covariates matrix X, and treatment matrix D.
+    Now incorporates feedback when available.
     """
-    # Create the outcome by Gaussianizing the difference between after (y2) and before (y1)
-    # For now, we'll use the tinnitus-initial value as our outcome
-    Y = user_data['tinnitus-initial'].values  # shape (N,)
+    # Use feedback as outcome when available, otherwise use tinnitus-initial
+    Y = user_data['feedback'].values if 'feedback' in user_data.columns else user_data['tinnitus-initial'].values
 
     # Extract the covariates
     covariate_cols = ['stress', 'sleep', 'noise', 'intoxication', 'location']
     X = user_data[covariate_cols].values  # shape (N, K)
 
-    # Create treatment indicators (d1, d2, d3, d4, d5, d6) based on the data
-    # For now, we'll create a simple one-hot encoding based on the location
+    # Create treatment indicators based on the location
     D = np.zeros((len(user_data), 6))  # shape (N, 6)
     location_mapping = {
         'Home': 0,
@@ -117,7 +110,6 @@ def extract_user_reg_data(user_data):
         if location in location_mapping:
             D[i, location_mapping[location]] = 1
         else:
-            # Default to first treatment if location is unknown
             D[i, 0] = 1
 
     return Y, X, D
