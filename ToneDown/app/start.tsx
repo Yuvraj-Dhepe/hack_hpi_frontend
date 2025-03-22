@@ -76,7 +76,7 @@ export default function Start() {
         
         <Image 
           source={require('../assets/images/Mindfulness-cuate.svg')} 
-          style={{ width: 250, height: 250, alignSelf: 'center', marginTop: 20 }} 
+          style={{ width: 250, height: 250, alignSelf: 'center', marginTop: -5 }} 
         />
       </ThemedView>
       <BottomNav />
@@ -94,7 +94,7 @@ const localstyle = StyleSheet.create({
     padding: 20,
   },
   continueButton: {
-    marginTop: 20,
+    marginTop: 0,
     marginBottom: 10,
     width: '80%',
     alignSelf: 'center'
