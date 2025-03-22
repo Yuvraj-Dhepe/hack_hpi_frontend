@@ -127,7 +127,7 @@ def backend_call(user_id, database_pull):
         # get user data
         Y, X, D = extract_user_reg_data(user_data)
         # run single_user_sampler
-        user_samples, user_posterior_best = draw_posterior_theta(Y, X, D, n_draws=1000)
+        user_samples, user_posterior_best = draw_posterior_theta(Y, X, D, n_draws=1200)
         # format as JSON
         user_posterior_best_json = format_posterior_best_json(user_posterior_best)
     
@@ -141,7 +141,7 @@ def backend_call(user_id, database_pull):
         group_data.append(extract_user_reg_data(user_data))
 
         # run hierarchical_sampler
-        samples, posterior_best_json = run_hierarchical_model(group_data, iter_sampling=1000)
+        samples, posterior_best_json = run_hierarchical_model(group_data, iter_sampling=1200)
 
         # extract the user's samples
         user_samples = samples[:, -1, :]
