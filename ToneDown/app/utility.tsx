@@ -7,7 +7,7 @@ interface QuestionProps {
   title: string;
   value: string | number;
   setValue: (value: any) => void;
-  inputType: 'text' | 'number' | 'button' | 'slider' | "buttons" | "buttonsWider";
+  inputType: 'text' | 'number' | 'button' | 'slider' | "buttons" | "buttonsWider" | "buttonsSmall";
   options: string[];
 }
 
@@ -77,6 +77,23 @@ export default function Question({ title, value, setValue, inputType, options }:
                 key={option}
                 style={[
                   styles.optionButtonWide,
+                  value === option && styles.optionButtonSelected,
+                ]}
+                onPress={() => setValue(option)}
+              >
+                <ThemedText style={styles.optionButtonText}>{option}</ThemedText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        );
+      case 'buttonsSmall':
+        return (
+          <View style={styles.buttonGroupSmall}>
+            {options.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={[
+                  styles.optionButtonSmall,
                   value === option && styles.optionButtonSelected,
                 ]}
                 onPress={() => setValue(option)}

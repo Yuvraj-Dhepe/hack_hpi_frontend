@@ -1,29 +1,16 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { useState } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { router } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import Question from './utility';
 import BottomNav from './BottomNav';
-import { saveQuestionResponse, getQuestionResponses } from './storage';
+import { saveQuestionResponse } from './storage';
 
 export default function IntoxicationQuestion() {
-  // Select the middle option by default (index 2 in a 4-item array)
   const intoxicationOptions = ["Alcohol", "Drugs", "Smoke", "Am Clean"];
   const [selectedIntoxication, setSelectedIntoxication] = useState(intoxicationOptions[2]);
-
-  // Remove or modify the useEffect that loads previous responses
-  // useEffect(() => {
-  //   const loadPreviousResponse = async () => {
-  //     const responses = await getQuestionResponses();
-  //     if (responses.intoxication) {
-  //       setSelectedIntoxication(responses.intoxication);
-  //     }
-  //   };
-  //   
-  //   loadPreviousResponse();
-  // }, []);
 
   const handleContinue = async () => {
     if (selectedIntoxication) {
@@ -33,54 +20,60 @@ export default function IntoxicationQuestion() {
   };
 
   return (
-    <View style={{height: "100%"}}>
-      <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
-        <View style={styles.cardContainer}>
-          <View style={styles.circleIconContainer}>
-            <ThemedText style={styles.icon}>🍷</ThemedText>
-          </View>
-        
-          <View style={styles.cardContent}>
-            <ThemedText type="title" style={styles.title}>
-              Substance Use
-            </ThemedText>
+    <ThemedView style={{ flex: 1 }}>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === "ios" ? "padding" : "height"} 
+        style={{ flex: 1 }}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.cardContainer}>
+            <View style={styles.circleIconContainer}>
+              <ThemedText style={styles.icon}>🍷</ThemedText>
+            </View>
           
-            <ThemedText style={styles.question}>
-              Are you intoxicated?
-            </ThemedText>
-          
+            <View style={styles.cardContent}>
+              <ThemedText type="title" style={styles.title}>
+                Substance Use
+              </ThemedText>
             
-            <Question 
-              title="" 
-              value={selectedIntoxication} 
-              setValue={setSelectedIntoxication} 
-              inputType="buttons" 
-              options={intoxicationOptions}
-              containerStyle={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}
-            />
+              <ThemedText style={styles.question}>
+                Are you intoxicated?
+              </ThemedText>
+            
+              <Question 
+                title="" 
+                value={selectedIntoxication} 
+                setValue={setSelectedIntoxication} 
+                inputType="buttons" 
+                options={intoxicationOptions}
+                containerStyle={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}
+              />
+            </View>
           </View>
-        </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity 
-            style={[globalStyles.button, styles.button, !selectedIntoxication && styles.buttonDisabled]}
-            disabled={!selectedIntoxication}
-            onPress={handleContinue}
-          >
-            <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
-          </TouchableOpacity>
-        </View>
-      </ThemedView>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity 
+              style={[globalStyles.button, styles.button, !selectedIntoxication && styles.buttonDisabled]}
+              disabled={!selectedIntoxication}
+              onPress={handleContinue}
+            >
+              <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
       <BottomNav />
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  centeredContainer: {
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingVertical: 20,
+    backgroundColor: COLORS.background,
   },
   cardContainer: {
     backgroundColor: COLORS.offwhite,
@@ -142,5 +135,5 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     opacity: 0.5,
-  }
+  },
 });

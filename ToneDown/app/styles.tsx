@@ -79,13 +79,13 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.beige,
     borderWidth: 2,
   },
-  buttonGroup: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',  // Add this to enable wrapping
-    justifyContent: 'center',
-    marginBottom: 10,
-    gap: 8,  // Optional: add some spacing between buttons
-  },
+buttonGroup: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',  // Add this to enable wrapping
+  justifyContent: 'center',
+  marginBottom: 10,
+  gap: 8,  // Optional: add some spacing between buttons
+},
   buttonGroupButton: {
       backgroundColor: COLORS.offwhite,
       padding: 15,
@@ -100,31 +100,52 @@ buttonOptionsContainer: {
   justifyContent: 'center',
   width: '100%',
 },
-
-    buttonGroupWide: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 10,
-    },
-    buttonGroupWideButton: {
-        backgroundColor: COLORS.offwhite,
-        padding: 15,
-        borderRadius: 15,
-        alignItems: 'center',
-        width: '65%',
-    },
-    optionButton: {
-      backgroundColor: COLORS.beige, // More visually appealing
-      paddingVertical: 12, // Adjust vertical padding for better fit
-      paddingHorizontal: 20, // Ensures text doesn't get cut off
-      margin: 5,
-      borderRadius: 30, // Slightly larger for smoother look
-      alignItems: 'center',
-      minWidth: 100, // Ensure text has enough space
+buttonGroupSmall: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  marginBottom: 10,
+},
+buttonGroupSmallButton: {
+  backgroundColor: COLORS.offwhite,
+  padding: 15,
+  borderRadius: 15,
+  alignItems: 'center',
+  width: '30%',
+},
+optionButtonSmall: {
+  backgroundColor: COLORS.beige,
+  paddingVertical: 12,
+  paddingHorizontal: 20,
+  margin: 5,
+  borderRadius: 30,
+  alignItems: 'center',
+  justifyContent: 'center',
+  minWidth: 100,
+},
+  buttonGroupWide: {
+      flexDirection: 'row',
       justifyContent: 'center',
-      borderWidth: 2,
-      borderColor: COLORS.darkYellow, // More contrast
+      marginBottom: 10,
   },
+  buttonGroupWideButton: {
+      backgroundColor: COLORS.offwhite,
+      padding: 15,
+      borderRadius: 15,
+      alignItems: 'center',
+      width: '65%',
+  },
+  optionButton: {
+    backgroundColor: COLORS.beige, // More visually appealing
+    paddingVertical: 12, // Adjust vertical padding for better fit
+    paddingHorizontal: 20, // Ensures text doesn't get cut off
+    margin: 5,
+    borderRadius: 30, // Slightly larger for smoother look
+    alignItems: 'center',
+    minWidth: 100, // Ensure text has enough space
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: COLORS.darkYellow, // More contrast
+},
   
   optionButtonWide: {
       backgroundColor: COLORS.beige,
