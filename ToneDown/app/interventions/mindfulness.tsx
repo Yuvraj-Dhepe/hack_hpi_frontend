@@ -9,11 +9,11 @@ export default function MusicScreen() {
   
   // Music genres data
   const musicGenres = [
-    { id: 1, name: "Relaxing Nature Sounds", color: COLORS.lightblue },
-    { id: 2, name: "Classical Music", color: COLORS.beige },
-    { id: 3, name: "Meditation Music", color: COLORS.lightgreen },
-    { id: 4, name: "White Noise", color: COLORS.yellow },
-    { id: 5, name: "Calming Piano", color: COLORS.blue },
+    { id: 1, name: "Meditation (Beginner)", color: COLORS.lightblue },
+    { id: 2, name: "Meditation (Novice)", color: COLORS.beige },
+    { id: 3, name: "Meditation (Advanced)", color: COLORS.lightgreen },
+    { id: 4, name: "Breathing Excercie", color: COLORS.yellow },
+    { id: 5, name: "Mental Journey", color: COLORS.blue },
   ];
 
   return (
@@ -21,9 +21,9 @@ export default function MusicScreen() {
       {/* ScrollView to make content scrollable */}
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
-          <Text style={styles.title}>Listen to music to <Text style={{fontWeight: 'bold'}}>relax</Text></Text>
+          <Text style={styles.title}>Practice mindfulness to improve <Text style={{fontWeight: 'bold'}}>resilience</Text></Text>
           <Text style={{textAlign: 'center', marginHorizontal: 20, marginBottom: 10}}>
-            Music can be a great way to relax and reduce stress. Find out what works best for you!
+            Mindfulness can help you deal with stress, emotion control, and change your brain activity! Try different excercises below.
           </Text>
           <Image source={require('../../assets/images/Music-cuate.svg')} 
             style={{ width: 250, height: 250, alignSelf: 'center', marginTop: -10 }}
