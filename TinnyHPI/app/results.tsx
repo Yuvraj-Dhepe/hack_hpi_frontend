@@ -5,6 +5,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import { styles, COLORS } from './styles';
 import { Float } from 'react-native/Libraries/Types/CodegenTypes';
+import BottomNav from './BottomNav'; // Import BottomNav
 
 export default function Results() {
   const [intervention1, setIntervention1] = useState('Intervention A');
@@ -39,7 +40,9 @@ export default function Results() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={{ height: '100%' }}>
+      <ThemedView style={styles.container}>
+
       <ThemedText type="title" style={styles.title}>
         We have some <b>suggestions</b> for you!
       </ThemedText>
@@ -64,6 +67,8 @@ export default function Results() {
           <ThemedText style={styles.buttonText}>Submit</ThemedText>
         </TouchableOpacity>
       </Link>
+      </ThemedView>
+      <BottomNav /> {/* Include BottomNav */}
     </ThemedView>
   );
 }
