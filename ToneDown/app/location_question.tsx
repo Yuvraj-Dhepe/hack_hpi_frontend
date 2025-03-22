@@ -44,13 +44,15 @@ export default function LocationQuestion() {
   //   loadPreviousResponse();
   // }, []);
 
-  const convertToCSV = (userData: { id?: string }, responses: Record<string, any>) => {
-    // Create headers - simplified to only include uid and data points
-    const headers = ['uid', 'tinnitus-initial', 'stress', 'sleep', 'noise', 'intoxication', 'location', 'timestamp'];
+  const convertToCSV = (userData: { id?: string, isPrivate?: boolean }, responses: Record<string, any>) => {
+    // Create headers - now including is_private field
+    const headers = ['uid', 'tinnitus-initial', 'stress', 'sleep', 'noise', 'intoxication', 'location', 'is_private', 'timestamp'];
     
     // Create data row
     const timestamp = new Date().toISOString();
     const userId = userData?.id || 'anonymous';
+    const isPrivate = userData?.isPrivate || false;
+    
     const data = [
       userId,
       responses.tinnitus || '',
@@ -59,6 +61,7 @@ export default function LocationQuestion() {
       responses.noise || '',
       responses.intoxication || '',
       responses.location || '',
+      isPrivate.toString(),
       timestamp
     ];
     

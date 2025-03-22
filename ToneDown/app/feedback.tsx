@@ -56,13 +56,15 @@ export default function Feedback() {
     router.push('/home');
   };
 
-  const convertToCSV = (userData: { id?: string }, responses: Record<string, any>) => {
-    // Create headers including feedback
-    const headers = ['uid', 'tinnitus-initial', 'stress', 'sleep', 'noise', 'intoxication', 'location', 'feedback', 'timestamp'];
+  const convertToCSV = (userData: { id?: string, isPrivate?: boolean }, responses: Record<string, any>) => {
+    // Create headers including feedback and is_private
+    const headers = ['uid', 'tinnitus-initial', 'stress', 'sleep', 'noise', 'intoxication', 'location', 'feedback', 'is_private', 'timestamp'];
     
     // Create data row
     const timestamp = new Date().toISOString();
     const userId = userData?.id || 'anonymous';
+    const isPrivate = userData?.isPrivate || false;
+    
     const data = [
       userId,
       responses.tinnitus || '',
@@ -72,6 +74,7 @@ export default function Feedback() {
       responses.intoxication || '',
       responses.location || '',
       responses.feedback || '',
+      isPrivate.toString(),
       timestamp
     ];
     
