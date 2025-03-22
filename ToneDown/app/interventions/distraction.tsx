@@ -77,8 +77,8 @@ export default function DistractionScreen() {
   ];
   
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.background, paddingBottom: 60 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={globalStyles.container}>
           <Text style={[globalStyles.title, {marginTop: 20}]}>
             <Text style={globalStyles.titleBold}>Positive Distraction</Text> for Tinnitus Relief

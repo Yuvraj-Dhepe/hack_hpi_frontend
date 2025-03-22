@@ -77,9 +77,9 @@ export default function SleepScreen() {
   ];
   
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.background, paddingBottom: 60 }}>
       {/* ScrollView to make content scrollable */}
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={globalStyles.container}>
           <Text style={[globalStyles.title, {marginTop: 20}]}>
             <Text style={globalStyles.titleBold}>Sleep Better</Text> to Manage Tinnitus
