@@ -194,7 +194,7 @@ hack_hpi_frontend/
 
 ## About This Project
 
-This application was developed during the HPI Hackathon 2024 by a team of master's students in computer science. The project integrates mobile development with statistical modeling to create a practical healthcare application.
+This application was developed during the HPI Hackathon 2025 by a team of master's students in computer science. The project integrates mobile development with statistical modeling to create a practical healthcare application.
 
 ## Contributors
 
