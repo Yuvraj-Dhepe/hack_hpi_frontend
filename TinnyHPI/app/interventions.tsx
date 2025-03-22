@@ -10,7 +10,7 @@ export default function HomeScreen() {
       id: 'music', 
       title: 'Listening to Music', 
       backgroundColor: COLORS.lightgreen, 
-      route: '/strengths'
+      route: '/music'
     },
     { 
       id: 'id2', 
