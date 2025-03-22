@@ -164,11 +164,14 @@ hack_hpi_frontend/
     └── hier_reg.stan          # Stan model definition
 ```
 
-## Contributors
+## Meet the Team
 
-- [Contributor 1](https://github.com/contributor1)
-- [Contributor 2](https://github.com/contributor2)
-- [Contributor 3](https://github.com/contributor3)
+- [Belena Zwadsich](https://github.com/BelanaZ)
+- [Till Zemann](https://github.com/till2)
+- [Yuvraj Dhepe](https://github.com/Yuvraj-Dhepe)
+- [Fynn Kroeger](https://github.com/fynnkroeger)
+- [Lasse Meixner](https://github.com/lasse-meixner)
+- [Isabel Kurth](https://github.com/IsabelKurth)
 
 ## License
 
