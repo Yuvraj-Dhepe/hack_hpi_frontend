@@ -1,95 +1,218 @@
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Image } from 'react-native';
-import BottomNav from '../BottomNav'; // Import BottomNav
-import { styles, COLORS } from '../styles';
+import BottomNav from '../BottomNav';
+import { styles as globalStyles, COLORS } from '../styles';
+import { useState } from 'react';
 
-export default function MusicScreen() {
+export default function DistractionScreen() {
   const router = useRouter();
+  const [expandedTip, setExpandedTip] = useState(null);
   
-  // Music genres data
-  const musicGenres = [
-    { id: 1, name: "Relaxing Nature Sounds", color: COLORS.lightblue },
-    { id: 2, name: "Classical Music", color: COLORS.beige },
-    { id: 3, name: "Meditation Music", color: COLORS.lightgreen },
-    { id: 4, name: "White Noise", color: COLORS.yellow },
-    { id: 5, name: "Calming Piano", color: COLORS.blue },
+  const toggleTip = (tipId) => {
+    setExpandedTip(expandedTip === tipId ? null : tipId);
+  };
+  
+  const tips = [
+    {
+      id: 1,
+      title: "Engage in Absorbing Activities",
+      color: COLORS.beige,
+      content: [
+        "Choose hobbies that require full attention like painting or puzzles",
+        "Learn a new skill that challenges your mind",
+        "Try activities that involve multiple senses at once"
+      ]
+    },
+    {
+      id: 2,
+      title: "Use Background Sounds",
+      color: COLORS.lightblue,
+      content: [
+        "Play nature sounds like rain or ocean waves",
+        "Use soft music that you find pleasant but not distracting",
+        "Try ambient noise generators designed for tinnitus relief"
+      ]
+    },
+    {
+      id: 3,
+      title: "Practice Mindful Movement",
+      color: COLORS.lightgreen,
+      content: [
+        "Try yoga, tai chi, or gentle stretching exercises",
+        "Focus on the sensations in your body while walking",
+        "Use exercise as a way to shift attention away from tinnitus"
+      ]
+    },
+    {
+      id: 4,
+      title: "Social Engagement",
+      color: COLORS.yellow,
+      content: [
+        "Have meaningful conversations with friends or family",
+        "Join community groups or classes related to your interests",
+        "Volunteer for causes you care about to stay engaged"
+      ]
+    },
+    {
+      id: 5,
+      title: "Mental Challenges",
+      color: COLORS.red,
+      content: [
+        "Solve puzzles, crosswords, or Sudoku",
+        "Play strategy games that require concentration",
+        "Read engaging books that capture your full attention"
+      ]
+    },
+    {
+      id: 6,
+      title: "Create a 'Tinnitus Toolkit'",
+      color: COLORS.green,
+      content: [
+        "Prepare a list of go-to distractions for difficult moments",
+        "Include quick activities for when tinnitus spikes",
+        "Have portable options ready when you're away from home"
+      ]
+    }
   ];
-
+  
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.background }}>
-      {/* ScrollView to make content scrollable */}
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Listen to music to <Text style={{fontWeight: 'bold'}}>relax</Text></Text>
-          <Text style={{textAlign: 'center', marginHorizontal: 20, marginBottom: 10}}>
-            Music can be a great way to relax and reduce stress. Find out what works best for you!
+      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}>
+        <View style={globalStyles.container}>
+          <Text style={[globalStyles.title, {marginTop: 20}]}>
+            <Text style={globalStyles.titleBold}>Positive Distraction</Text> for Tinnitus Relief
           </Text>
-          <Image source={require('../../assets/images/Music-cuate.svg')} 
-            style={{ width: 250, height: 250, alignSelf: 'center', marginTop: -10 }}
+          
+          <Text style={styles.introText}>
+            Using positive distractions can help reduce your awareness of tinnitus. 
+            When your mind is engaged elsewhere, the perception of tinnitus often 
+            diminishes, giving you relief and improving your quality of life.
+          </Text>
+          
+          <Image 
+            source={require('../../assets/images/Sudoku.svg')} 
+            style={{ width: 250, height: 250, alignSelf: 'center', marginVertical: 10 }}
           />
           
-          {/* Music Genres Section */}
-          <View style={genreStyles.genresContainer}>
-            {musicGenres.map(genre => (
-              <TouchableOpacity 
-                key={genre.id}
-                style={[genreStyles.genreBar, {backgroundColor: genre.color}]}
-                onPress={() => console.log(`Playing ${genre.name}`)}
-              >
-                <Text style={genreStyles.genreText}>{genre.name}</Text>
-                <View style={genreStyles.playButton}>
-                  <Text style={genreStyles.playIcon}>▶</Text>
-                </View>
-              </TouchableOpacity>
+          <Text style={[globalStyles.subtitle, {marginTop: 10, marginBottom: 15, alignSelf: 'flex-start', paddingLeft: 20}]}>
+            Effective Distraction Techniques
+          </Text>
+          
+          <View style={styles.tipsContainer}>
+            {tips.map((tip) => (
+              <View key={tip.id} style={styles.tipWrapper}>
+                <TouchableOpacity 
+                  style={[styles.tipCard, {backgroundColor: tip.color}]}
+                  onPress={() => toggleTip(tip.id)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.tipTitle}>{tip.title}</Text>
+                  <Text style={styles.expandIcon}>{expandedTip === tip.id ? '−' : '+'}</Text>
+                </TouchableOpacity>
+                
+                {expandedTip === tip.id && (
+                  <View style={styles.tipContent}>
+                    {tip.content.map((item, index) => (
+                      <View key={index} style={styles.tipItem}>
+                        <Text style={styles.tipBullet}>•</Text>
+                        <Text style={styles.tipText}>{item}</Text>
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </View>
             ))}
           </View>
           
-          {/* Add padding at the bottom to ensure content doesn't get hidden behind BottomNav */}
-          <View style={{ paddingBottom: 70 }} />
+          <View style={styles.noteContainer}>
+            <Text style={styles.noteText}>
+              Remember that distraction works best as part of a comprehensive approach 
+              to tinnitus management. Find what works for you and incorporate those 
+              techniques into your daily routine.
+            </Text>
+          </View>
         </View>
       </ScrollView>
-      <BottomNav /> {/* Include BottomNav */}
+      <BottomNav />
     </View>
   );
 }
 
-const genreStyles = StyleSheet.create({
-  genresContainer: {
+const styles = StyleSheet.create({
+  introText: {
+    textAlign: 'center', 
+    marginHorizontal: 20, 
+    marginBottom: 10, 
+    marginTop: 10,
+    color: COLORS.textPrimary,
+    lineHeight: 22
+  },
+  tipsContainer: {
     width: '100%',
     paddingHorizontal: 20,
-    marginTop: 20,
   },
-  genreBar: {
+  tipWrapper: {
+    marginBottom: 10,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: COLORS.offwhite,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  tipCard: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 60,
+    padding: 15,
     borderRadius: 12,
-    marginBottom: 12,
-    paddingHorizontal: 20,
   },
-  genreText: {
+  tipTitle: {
     fontSize: 16,
     fontWeight: '500',
     color: COLORS.textPrimary,
+    flex: 1,
   },
-  playButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: COLORS.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.5,
-    elevation: 2,
-  },
-  playIcon: {
-    fontSize: 14,
-    marginLeft: 2, // Slight adjustment to center the play icon
+  expandIcon: {
+    fontSize: 24,
     color: COLORS.textPrimary,
+    marginLeft: 10,
+  },
+  tipContent: {
+    padding: 15,
+    backgroundColor: COLORS.offwhite,
+  },
+  tipItem: {
+    flexDirection: 'row',
+    marginBottom: 8,
+    paddingRight: 10,
+  },
+  tipBullet: {
+    fontSize: 16,
+    marginRight: 8,
+    color: COLORS.textPrimary,
+  },
+  tipText: {
+    fontSize: 14,
+    color: COLORS.textPrimary,
+    flex: 1,
+    lineHeight: 20,
+  },
+  noteContainer: {
+    marginTop: 20,
+    marginHorizontal: 20,
+    padding: 15,
+    backgroundColor: COLORS.lightblue,
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: COLORS.blue,
+  },
+  noteText: {
+    fontSize: 14,
+    color: COLORS.textPrimary,
+    lineHeight: 20,
   }
 });
