@@ -1,18 +1,17 @@
-# ToneDown: Personalized Tinnitus Intervention App 🎧
+# ToneDown: Personalized Tinnitus Intervention App
 
-> [!NOTE]
-> ToneDown is an innovative mobile application designed to help individuals manage tinnitus through personalized interventions. The app uses advanced statistical modeling to learn from user feedback and provide increasingly effective intervention recommendations over time.
+ToneDown is a mobile application designed to help individuals manage tinnitus through personalized interventions. By leveraging advanced statistical modeling, the app learns from user feedback to provide increasingly effective recommendations over time.
 
 [![ToneDown Demo](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
 
-## 📱 Project Overview
+## Project Overview
 
 ToneDown consists of three main components:
-- **React Native Frontend**: A cross-platform mobile application built with Expo
-- **Flask Backend**: A Python-based API server for data processing and analysis
-- **Statistical Modeling**: Bayesian hierarchical models for personalized intervention recommendations
+- **React Native Frontend**: A cross-platform mobile application built with Expo.
+- **Flask Backend**: A Python-based API server for data processing and analysis.
+- **Statistical Modeling**: Bayesian hierarchical models for personalized intervention recommendations.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js (v16+)
@@ -33,9 +32,6 @@ npm install
 # Start the Expo development server
 npx expo start
 ```
-
-> [!TIP]
-> After starting the Expo server, you can run the app on your physical device by scanning the QR code with the Expo Go app.
 
 ### Backend Setup
 <details>
@@ -59,7 +55,7 @@ python app.py
 ```
 </details>
 
-> [!IMPORTANT]
+> [!IMPORTANT]  
 > Both the frontend and backend must be running simultaneously for the app to function properly.
 
 ### CmdStan Setup (for Statistical Modeling)
@@ -76,10 +72,10 @@ python -m cmdstanpy.install_cmdstan --cores 1 --verbose
 ```
 </details>
 
-> [!CAUTION]
+> [!CAUTION]  
 > The statistical modeling component requires significant computational resources. Ensure your system meets the minimum requirements before proceeding.
 
-## 🧩 Project Components
+## Project Components
 
 ### 1. React Native Frontend
 
@@ -88,20 +84,20 @@ The frontend provides a seamless cross-platform mobile experience for tinnitus m
 <details>
 <summary>Key Features</summary>
 
-- **User Profiles**: Personalized experience with user data storage
-- **Tinnitus Assessment**: Questionnaires to evaluate tinnitus severity and characteristics
-- **Intervention Recommendations**: Display of personalized intervention suggestions
-- **Feedback Collection**: Gathering user feedback on intervention effectiveness
-- **Privacy Controls**: Options for users to control data sharing
+- **User Profiles**: Personalized experience with user data storage.
+- **Tinnitus Assessment**: Questionnaires to evaluate tinnitus severity and characteristics.
+- **Intervention Recommendations**: Display of personalized intervention suggestions.
+- **Feedback Collection**: Gathering user feedback on intervention effectiveness.
+- **Privacy Controls**: Options for users to control data sharing.
 </details>
 
 <details>
 <summary>Key Technologies</summary>
 
-- React Native with Expo
-- Expo Router for navigation
-- AsyncStorage for local data persistence
-- Expo Secure Store for sensitive data
+- React Native with Expo.
+- Expo Router for navigation.
+- AsyncStorage for local data persistence.
+- Expo Secure Store for sensitive data.
 </details>
 
 ### 2. Flask Backend
@@ -111,19 +107,19 @@ The Flask backend serves as the API layer between the frontend and the statistic
 <details>
 <summary>Key Features</summary>
 
-- **Data Processing**: Cleaning and preparing user data for analysis
-- **API Endpoints**: RESTful endpoints for data submission and retrieval
-- **Integration**: Connecting the frontend with the statistical models
-- **Data Storage**: Managing user data and intervention history
+- **Data Processing**: Cleaning and preparing user data for analysis.
+- **API Endpoints**: RESTful endpoints for data submission and retrieval.
+- **Integration**: Connecting the frontend with the statistical models.
+- **Data Storage**: Managing user data and intervention history.
 </details>
 
 <details>
 <summary>Key Technologies</summary>
 
-- Flask web framework
-- Flask-CORS for cross-origin resource sharing
-- Pandas for data manipulation
-- JSON for data exchange
+- Flask web framework.
+- Flask-CORS for cross-origin resource sharing.
+- Pandas for data manipulation.
+- JSON for data exchange.
 </details>
 
 ### 3. Statistical Modeling
@@ -133,22 +129,22 @@ The statistical component uses Bayesian hierarchical models to provide personali
 <details>
 <summary>Key Features</summary>
 
-- **Single-User Sampling**: Analyzing individual user data to determine effective interventions
-- **Hierarchical Sampling**: Learning across users to improve recommendations
-- **Posterior Probability Calculation**: Determining the most likely effective interventions
-- **Adaptive Learning**: Improving recommendations over time based on feedback
+- **Single-User Sampling**: Analyzing individual user data to determine effective interventions.
+- **Hierarchical Sampling**: Learning across users to improve recommendations.
+- **Posterior Probability Calculation**: Determining the most likely effective interventions.
+- **Adaptive Learning**: Improving recommendations over time based on feedback.
 </details>
 
 <details>
 <summary>Key Technologies</summary>
 
-- CmdStan for Bayesian inference
-- Stan modeling language
-- Python wrappers for model integration
-- Pandas for data handling
+- CmdStan for Bayesian inference.
+- Stan modeling language.
+- Python wrappers for model integration.
+- Pandas for data handling.
 </details>
 
-## 📸 App Gallery
+## App Gallery
 
 <table>
   <tr>
@@ -173,10 +169,10 @@ The statistical component uses Bayesian hierarchical models to provide personali
   </tr>
 </table>
 
-> [!WARNING]
+> [!WARNING]  
 > The app contains features that play audio. Users with severe tinnitus should start with low volume settings and gradually adjust as needed.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 hack_hpi_frontend/
@@ -196,7 +192,11 @@ hack_hpi_frontend/
     └── hier_reg.stan          # Stan model definition
 ```
 
-## 👥 Contributors
+## About This Project
+
+This application was developed during the HPI Hackathon 2024 by a team of master's students in computer science. The project integrates mobile development with statistical modeling to create a practical healthcare application.
+
+## Contributors
 
 - [Belena Zwadsich](https://github.com/BelanaZ)
 - [Till Zemann](https://github.com/till2)
@@ -205,11 +205,10 @@ hack_hpi_frontend/
 - [Lasse Meixner](https://github.com/lasse-meixner)
 - [Isabel Kurth](https://github.com/IsabelKurth)
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
----
-
-> [!NOTE]
+> [!NOTE]  
 > For any questions or issues, please open an issue in this repository.
+
