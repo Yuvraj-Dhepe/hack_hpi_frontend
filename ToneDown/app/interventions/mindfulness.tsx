@@ -25,7 +25,7 @@ export default function MusicScreen() {
           <Text style={{textAlign: 'center', marginHorizontal: 20, marginBottom: 10}}>
             Mindfulness can help you deal with stress, emotion control, and change your brain activity! Try different excercises below.
           </Text>
-          <Image source={require('../../assets/images/Music-cuate.svg')} 
+          <Image source={require('../../assets/images/Meditation-pana.svg')} 
             style={{ width: 250, height: 250, alignSelf: 'center', marginTop: -10 }}
           />
           
