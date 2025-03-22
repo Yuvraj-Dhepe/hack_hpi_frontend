@@ -73,8 +73,7 @@ export default function HomeScreen() {
     </SafeAreaView>
     <View style={{height: 65}}>
           <BottomNav/>
-          </View>
-
+    </View>
     </View>
   );
 }
