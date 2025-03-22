@@ -197,6 +197,7 @@ export default function Feedback() {
 const localStyle = StyleSheet.create({
   container: {
     height: '100%',
+    backgroundColor: COLORS.background,
   }
 });
 const styles = StyleSheet.create({

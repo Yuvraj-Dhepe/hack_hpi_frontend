@@ -71,7 +71,7 @@ export default function Question({ title, value, setValue, inputType, options }:
         );
       case 'buttonsWider':
         return (
-          <View style={styles.buttonGroupWide}>
+          <View style={[styles.buttonGroupWide, {backgroundColor: COLORS.offwhite}]}>
             {options.map((option) => (
               <TouchableOpacity
                 key={option}
