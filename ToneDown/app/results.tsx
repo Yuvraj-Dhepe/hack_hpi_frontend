@@ -29,19 +29,29 @@ export default function Results() {
         }
         
         const data = await response.json();
-        setDiagnosisProbabilities(data);
+        // setDiagnosisProbabilities(data);
+
+        // Mock-up results
+        setDiagnosisProbabilities({
+          'Take a walk': 0.85,
+          'Listen to calming music': 0.06,
+          'Deep breathing exercise': 0.03,
+          'Mindfulness meditation': 0.03,
+          'Progressive muscle relaxation': 0.02,
+          'White noise': 0.01
+        });
       } catch (error) {
         console.error('Error fetching analysis:', error);
         setError('Failed to load analysis. Please try again later.');
         
         // Fallback to mock data if backend is unavailable
         setDiagnosisProbabilities({
-          "d1": 0.88,
-          "d2": 0.21,
-          "d3": 0.05,
-          "d4": 0.13,
-          "d5": 0.10,
-          "d6": 0.17
+          'Take a walk': 0.85,
+          'Listen to calming music': 0.06,
+          'Deep breathing exercise': 0.03,
+          'Mindfulness meditation': 0.03,
+          'Progressive muscle relaxation': 0.02,
+          'White noise': 0.01
         });
       } finally {
         setIsLoading(false);
