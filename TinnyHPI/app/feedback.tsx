@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { styled } from 'nativewind';
 import { Link } from 'expo-router';
 import { styles, COLORS } from './styles';
+import BottomNav from './BottomNav'; // Import BottomNav
 
 import Question from './utility';
 
@@ -16,7 +17,8 @@ export default function Feedback() {
   const [feedback, setFeedback] = useState(null);
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={localStyle.container}>
+      <ThemedView style={styles.container}>
       <ThemedText type="title" style={styles.title}>
         Feedback
       </ThemedText>
@@ -28,6 +30,14 @@ export default function Feedback() {
           <ThemedText style={styles.buttonText}>Submit</ThemedText>
         </TouchableOpacity>
       </Link>
+      </ThemedView>
+      <BottomNav /> {/* Include BottomNav */}    
     </ThemedView>
   );
 }
+
+const localStyle = StyleSheet.create({
+  container: {
+    height: '100%',
+  }
+});

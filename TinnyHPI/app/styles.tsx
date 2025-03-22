@@ -5,12 +5,13 @@ import { StyleSheet } from 'react-native';
 export const COLORS = {
     background: "#f2f2f2",
   backgroundGrey: "#f5f4f9",
-    yellow: "#f2dd8e",
+    yellow: "#dac780",
     beige: "#f1e6df",
     lightblue: "#bfc9f8",
-    red: "#bfc9f8",
-    green: "#bfc9f8",
+    red: "#db8f7e",
+    green: "#8f9869",
     blue: "#bfc9f8",
+    lightgreen:"#cbe0dd",
     offwhite: "#fdfdfd",
     white: "#ffffff",
     black: "#131313",
@@ -132,4 +133,23 @@ barContainer: {
     backgroundColor: COLORS.green, // Change the color of the bar to green for better visibility
     height: '100%',
     },
+    bottomNav: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderTopColor: '#EEE',
+      },
+      navButton: {
+        padding: 12,
+      },
+      mainNavButton: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#000',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 });
