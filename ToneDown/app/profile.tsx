@@ -29,7 +29,7 @@ export default function Profile() {
     }, []);
 
     return (
-        <View style={{height: '100%'}}>
+        <View style={{flex: 1, paddingBottom: 60}}>
             <ThemedView style={styles.container}>
                 <ThemedText type="title" style={styles.title}><b>Profile</b></ThemedText>
                 <ThemedText style={styles.text}>Welcome to your profile page</ThemedText>
@@ -45,9 +45,7 @@ export default function Profile() {
                 </View>
                 </View>
             </ThemedView>
-            <View style={{height: 65}}>
             <BottomNav />
-            </View>
         </View>
     );
 }
