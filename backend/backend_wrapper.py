@@ -127,9 +127,9 @@ def backend_call(user_id, database_pull):
         # get user data
         Y, X, D = extract_user_reg_data(user_data)
         # run single_user_sampler
-        samples, posterior_best = draw_posterior_theta(Y, X, D, n_draws=1000)
+        user_samples, user_posterior_best = draw_posterior_theta(Y, X, D, n_draws=1000)
         # format as JSON
-        posterior_best_json = format_posterior_best_json(posterior_best)
+        user_posterior_best_json = format_posterior_best_json(user_posterior_best)
     
     # if user is in shared-data mode, pass his data "first" and append the rest, run hierarchical_sampler, and get draws and posterior_best_json for the user
     else:
