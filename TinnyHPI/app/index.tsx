@@ -8,7 +8,7 @@ export default function HomeRedirect() {
 
   useEffect(() => {
     if (navigationState?.key) {
-      // only redirect when navigation is mounted
+      // Always redirect to start page when app opens
       router.replace('/start');
     }
   }, [navigationState]);

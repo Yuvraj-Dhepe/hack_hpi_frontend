@@ -1,37 +1,52 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
-import { styles, COLORS } from './styles';
-import { Float } from 'react-native/Libraries/Types/CodegenTypes';
-import BottomNav from './BottomNav'; // Import BottomNav
+import { styles as globalStyles, COLORS } from './styles';
+import BottomNav from './BottomNav';
 
 export default function Results() {
-  const [intervention1, setIntervention1] = useState('Intervention A');
-  const [intervention2, setIntervention2] = useState('Intervention B');
-  const [intervention3, setIntervention3] = useState('Intervention C');
-  
-  // State variables for the probabilities
-  const [probability1, setProbability1] = useState(0.7);
-  const [probability2, setProbability2] = useState(0.5);
-  const [probability3, setProbability3] = useState(0.9);
+  const [isLoading, setIsLoading] = useState(true);
+  const [diagnosisProbabilities, setDiagnosisProbabilities] = useState<Record<string, number>>({});
+  const [error, setError] = useState<string | null>(null);
 
-  // Optionally fetch probabilities from your backend
+  // Fetch probabilities from backend
   useEffect(() => {
-    // Simulating a backend call to fetch probabilities
     const fetchProbabilities = async () => {
-      // Replace with your backend call
-      const fetchedProbabilities = { prob1: 0.7, prob2: 0.5, prob3: 0.9 };
-      setProbability1(fetchedProbabilities.prob1);
-      setProbability2(fetchedProbabilities.prob2);
-      setProbability3(fetchedProbabilities.prob3);
+      try {
+        setIsLoading(true);
+        const response = await fetch('http://localhost:5000/api/get-analysis');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setDiagnosisProbabilities(data);
+      } catch (error) {
+        console.error('Error fetching analysis:', error);
+        setError('Failed to load analysis. Please try again later.');
+        
+        // Fallback to mock data if backend is unavailable
+        setDiagnosisProbabilities({
+          "d1": 0.88,
+          "d2": 0.21,
+          "d3": 0.05,
+          "d4": 0.13,
+          "d5": 0.10,
+          "d6": 0.17
+        });
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchProbabilities();
   }, []);
 
-  const renderProbabilityBar = (probability:Float) => {
+  const renderProbabilityBar = (probability: number) => {
     return (
       <View style={styles.barContainer}>
         <View style={[styles.bar, { width: `${probability * 100}%` }]} />
@@ -40,35 +55,93 @@ export default function Results() {
   };
 
   return (
-    <ThemedView style={{ height: '100%' }}>
-      <ThemedView style={styles.container}>
+    <View style={{height: "100%"}}>
+      <ThemedView style={[globalStyles.container, styles.container]}>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title" style={styles.title}>
+            Your
+          </ThemedText>
+          <ThemedText type="title" style={styles.titleBold}>
+            Results
+          </ThemedText>
+        </ThemedView>
 
-      <ThemedText type="title" style={styles.title}>
-        We have some <b>suggestions</b> for you!
-      </ThemedText>
-      
-      <ThemedText style={styles.intervention}>
-        Intervention 1: {intervention1}
-      </ThemedText>
-      {renderProbabilityBar(probability1)}
+        {isLoading ? (
+          <ThemedText style={styles.loadingText}>Loading your analysis...</ThemedText>
+        ) : error ? (
+          <ThemedText style={styles.errorText}>{error}</ThemedText>
+        ) : (
+          <View style={styles.resultsContainer}>
+            {Object.entries(diagnosisProbabilities).map(([key, value]) => (
+              <View key={key} style={styles.resultItem}>
+                <ThemedText style={styles.intervention}>
+                  {key}: {Math.round(value * 100)}%
+                </ThemedText>
+                {renderProbabilityBar(value)}
+              </View>
+            ))}
+          </View>
+        )}
 
-      <ThemedText style={styles.intervention}>
-        Intervention 2: {intervention2}
-      </ThemedText>
-      {renderProbabilityBar(probability2)}
-
-      <ThemedText style={styles.intervention}>
-        Intervention 3: {intervention3}
-      </ThemedText>
-      {renderProbabilityBar(probability3)}
-
-      <Link href="/feedback">
-        <TouchableOpacity style={styles.button}>
-          <ThemedText style={styles.buttonText}>Submit</ThemedText>
-        </TouchableOpacity>
-      </Link>
+        <Link href="/feedback">
+          <TouchableOpacity style={globalStyles.button}>
+            <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
+          </TouchableOpacity>
+        </Link>
       </ThemedView>
-      <BottomNav /> {/* Include BottomNav */}
-    </ThemedView>
+      <BottomNav />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 28,
+    marginRight: 8,
+  },
+  titleBold: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  loadingText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  resultsContainer: {
+    marginTop: 20,
+    marginBottom: 30,
+  },
+  resultItem: {
+    marginBottom: 15,
+  },
+  intervention: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  barContainer: {
+    height: 20,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  bar: {
+    height: '100%',
+    backgroundColor: COLORS.green,
+    borderRadius: 10,
+  },
+});

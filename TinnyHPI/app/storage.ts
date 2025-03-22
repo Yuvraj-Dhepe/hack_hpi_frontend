@@ -1,11 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Crypto from 'expo-crypto';
 
 // User data
 export const saveUserData = async (userData: any) => {
   try {
+    // Generate a hash-based ID from user name
+    if (!userData.id && userData.name) {
+      // Create a deterministic ID based on user name
+      const userString = `${userData.name}-${Date.now()}`;
+      userData.id = await Crypto.digestStringAsync(
+        Crypto.CryptoDigestAlgorithm.SHA256,
+        userString
+      );
+    }
     await AsyncStorage.setItem('userData', JSON.stringify(userData));
+    return userData;
   } catch (error) {
     console.error('Error saving user data:', error);
+    return userData;
   }
 };
 
@@ -43,8 +55,32 @@ export const getQuestionResponses = async () => {
 // Clear all data
 export const clearAllData = async () => {
   try {
-    await AsyncStorage.multiRemove(['userData', 'questionResponses']);
+    // Get all keys from AsyncStorage
+    const allKeys = await AsyncStorage.getAllKeys();
+    
+    // Remove all data
+    await AsyncStorage.multiRemove(allKeys);
+    
+    console.log('All user data cleared successfully');
   } catch (error) {
     console.error('Error clearing data:', error);
+    throw error; // Re-throw to allow handling in the calling function
+  }
+};
+
+// Reset user data and navigate to start
+export const resetUserData = async () => {
+  try {
+    // Remove specific keys related to user data
+    await AsyncStorage.removeItem('userInfo');
+    await AsyncStorage.removeItem('setupComplete');
+    await AsyncStorage.removeItem('userData');
+    await AsyncStorage.removeItem('questionResponses');
+    
+    console.log('User data reset successfully');
+    return true;
+  } catch (error) {
+    console.error('Failed to reset user data:', error);
+    return false;
   }
 };

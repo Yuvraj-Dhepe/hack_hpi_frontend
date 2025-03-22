@@ -6,10 +6,29 @@ import { router } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import Question from './utility';
 import BottomNav from './BottomNav';
-import { saveQuestionResponse, getQuestionResponses } from './storage';
+import { saveQuestionResponse, getQuestionResponses, getUserData } from './storage';
+
+interface UserData {
+  id?: string;
+  name?: string;
+  age?: string | number;
+  sex?: string;
+  [key: string]: any; // Allow for additional properties
+}
+
+interface QuestionResponses {
+  tinnitus?: number | string;
+  stress?: number | string;
+  sleep?: number | string;
+  noise?: number | string;
+  intoxication?: string;
+  location?: string;
+  [key: string]: any; // Allow for additional responses
+}
 
 export default function LocationQuestion() {
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const locations = ["Home", "Work", "Other"];
 
   useEffect(() => {
@@ -23,10 +42,81 @@ export default function LocationQuestion() {
     loadPreviousResponse();
   }, []);
 
+  const convertToCSV = (userData: { id?: string }, responses: Record<string, any>) => {
+    // Create headers - simplified to only include uid and data points
+    const headers = ['uid', 'tinnitus-initial', 'stress', 'sleep', 'noise', 'intoxication', 'location', 'timestamp'];
+    
+    // Create data row
+    const timestamp = new Date().toISOString();
+    const userId = userData?.id || 'anonymous';
+    const data = [
+      userId,
+      responses.tinnitus || '',
+      responses.stress || '',
+      responses.sleep || '',
+      responses.noise || '',
+      responses.intoxication || '',
+      responses.location || '',
+      timestamp
+    ];
+    
+    // Combine headers and data
+    const csvContent = [
+      headers.join(','),
+      data.join(',')
+    ].join('\n');
+    
+    return csvContent;
+  };
+
+  const sendDataToBackend = async (csvData: string, userId: string) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/upload-csv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          csv_data: csvData,
+          user_id: userId
+        }),
+      });
+      
+      const result = await response.json();
+      console.log('Backend response:', result);
+      return result;
+    } catch (error) {
+      console.error('Error sending data to backend:', error);
+      throw error;
+    }
+  };
+
   const handleContinue = async () => {
     if (selectedLocation) {
-      await saveQuestionResponse('location', selectedLocation);
-      router.push('/results');
+      setIsLoading(true);
+      try {
+        // Save the current response
+        await saveQuestionResponse('location', selectedLocation);
+        
+        // Get all responses and user data
+        const responses = await getQuestionResponses();
+        const userData = await getUserData();
+        
+        // Convert to CSV
+        const csvData = convertToCSV(userData, responses);
+        
+        // Send to backend
+        await sendDataToBackend(csvData, userData?.id || 'anonymous');
+        
+        // Navigate to results
+        router.push('/results');
+      } catch (error) {
+        console.error('Error in submission process:', error);
+        // Still navigate to results even if backend submission fails
+        router.push('/results');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -49,9 +139,9 @@ export default function LocationQuestion() {
             
             <Question 
               title="" 
-              value={selectedLocation} 
+              value={selectedLocation || ''} 
               setValue={setSelectedLocation} 
-              inputType="buttonsWider" 
+              inputType="button" 
               options={locations}
             />
           </View>
@@ -59,11 +149,14 @@ export default function LocationQuestion() {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity 
-            style={[globalStyles.button, styles.button, !selectedLocation && styles.buttonDisabled]}
-            disabled={!selectedLocation}
+            style={[globalStyles.button, styles.button, 
+              (!selectedLocation || isLoading) && styles.buttonDisabled]}
+            disabled={!selectedLocation || isLoading}
             onPress={handleContinue}
           >
-            <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
+            <ThemedText style={globalStyles.buttonText}>
+              {isLoading ? "Submitting..." : "Finish"}
+            </ThemedText>
           </TouchableOpacity>
         </View>
       </ThemedView>

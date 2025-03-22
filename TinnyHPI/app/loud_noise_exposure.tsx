@@ -7,7 +7,7 @@ import { styles as globalStyles, COLORS } from './styles';
 import Question from './utility';
 
 export default function LoudNoiseExposure() {
-  const [selectedExposure, setSelectedExposure] = useState(null);
+  const [selectedExposure, setSelectedExposure] = useState('');
   const exposureOptions = ["Yes", "No"];
 
   return (
@@ -30,7 +30,7 @@ export default function LoudNoiseExposure() {
             title="" 
             value={selectedExposure} 
             setValue={setSelectedExposure} 
-            inputType="buttonsWider" 
+            inputType="button" 
             options={exposureOptions}
           />
         </View>

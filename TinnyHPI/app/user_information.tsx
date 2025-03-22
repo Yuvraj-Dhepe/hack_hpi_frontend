@@ -1,27 +1,35 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { styles, COLORS } from './styles';
 import BottomNav from './BottomNav';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Question from './utility';
+import { saveUserData } from './storage';
 
 export default function UserInformation() {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [sex, setSex] = useState('');
 
-  const saveUserData = async () => {
+  const handleSaveUserData = async () => {
     try {
+      if (!name || !age || !sex) {
+        // Basic validation
+        alert('Please fill in all fields');
+        return;
+      }
+      
       const userData = {
         name,
         age,
         sex
       };
-      await AsyncStorage.setItem('userData', JSON.stringify(userData));
-      router.push('/home');
+      // Use the updated saveUserData function that generates a hash ID
+      const updatedUserData = await saveUserData(userData);
+      console.log('User data saved with ID:', updatedUserData.id);
+      router.replace('/home');
     } catch (error) {
       console.error('Error saving user data:', error);
     }
@@ -30,27 +38,27 @@ export default function UserInformation() {
   return (
     <View style={{height: '100%'}}>
       <ThemedView style={localStyle.container}>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title" style={styles.title}>
-            Please Enter your
-        </ThemedText>
-        <ThemedText type="title" style={styles.titleBold}>
-            Information
-        </ThemedText>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title" style={styles.title}>
+              Please Enter your
+          </ThemedText>
+          <ThemedText type="title" style={styles.titleBold}>
+              Information
+          </ThemedText>
         </ThemedView>
-      
-      <Question title="What is your name?" value={name} setValue={setName} inputType="text"/>
-      <Question title="How old are you?" value={age} setValue={setAge} inputType="number"/>
-      <Question title="What is your sex?" value={sex} setValue={setSex} inputType="button" options={["m","f","d"]}/>
+        
+        <Question title="What is your name?" value={name} setValue={setName} inputType="text" options={[]}/>
+        <Question title="How old are you?" value={age} setValue={setAge} inputType="number" options={[]}/>
+        <Question title="What is your sex?" value={sex} setValue={setSex} inputType="button" options={["m","f","d"]}/>
 
-      <View style={{ flex: 1, justifyContent: 'start', alignItems: 'center' }}>
-        <TouchableOpacity style={styles.button} onPress={saveUserData}>
-          <ThemedText style={styles.buttonText}>Submit</ThemedText>
-        </TouchableOpacity>
-      </View>
+        <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
+          <TouchableOpacity style={styles.button} onPress={handleSaveUserData}>
+            <ThemedText style={styles.buttonText}>Submit</ThemedText>
+          </TouchableOpacity>
+        </View>
       </ThemedView>
-        <BottomNav />
-      </View>
+      <BottomNav />
+    </View>
   );
 }
 

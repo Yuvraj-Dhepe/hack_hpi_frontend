@@ -9,7 +9,7 @@ import BottomNav from './BottomNav';
 import { saveQuestionResponse, getQuestionResponses } from './storage';
 
 export default function IntoxicationQuestion() {
-  const [selectedIntoxication, setSelectedIntoxication] = useState(null);
+  const [selectedIntoxication, setSelectedIntoxication] = useState('');
   const intoxicationOptions = ["Alcohol", "Drugs", "Smoke", "Am Clean"];
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function IntoxicationQuestion() {
               title="" 
               value={selectedIntoxication} 
               setValue={setSelectedIntoxication} 
-              inputType="buttonsWider" 
+              inputType="button" 
               options={intoxicationOptions}
             />
           </View>
