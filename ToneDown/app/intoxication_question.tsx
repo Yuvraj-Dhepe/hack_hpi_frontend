@@ -49,12 +49,14 @@ export default function IntoxicationQuestion() {
               Are you intoxicated?
             </ThemedText>
           
+            
             <Question 
               title="" 
               value={selectedIntoxication} 
               setValue={setSelectedIntoxication} 
-              inputType="button" 
+              inputType="buttons" 
               options={intoxicationOptions}
+              containerStyle={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}
             />
           </View>
         </View>
@@ -131,10 +133,13 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    marginTop: 20,
     alignItems: 'center',
-    justifyContent: 'center',
-},
+    marginTop: 40,
+  },
+  button: {
+    minWidth: 200,
+    backgroundColor: COLORS.beige,
+  },
   buttonDisabled: {
     opacity: 0.5,
   }

@@ -81,8 +81,10 @@ export const styles = StyleSheet.create({
   },
   buttonGroup: {
     flexDirection: 'row',
+    flexWrap: 'wrap',  // Add this to enable wrapping
     justifyContent: 'center',
     marginBottom: 10,
+    gap: 8,  // Optional: add some spacing between buttons
   },
   buttonGroupButton: {
       backgroundColor: COLORS.offwhite,
@@ -91,6 +93,14 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       width: '60%',
   },
+  // Add this to your styles
+buttonOptionsContainer: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  width: '100%',
+},
+
     buttonGroupWide: {
         flexDirection: 'row',
         justifyContent: 'center',
