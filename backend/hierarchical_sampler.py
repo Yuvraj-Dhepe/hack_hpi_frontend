@@ -1,5 +1,6 @@
 import numpy as np
 from cmdstanpy import CmdStanModel
+from pathlib import Path
 
 # AUXILIARY FUNCTION
 def prepare_hierarchical_data(user_data, sigma=1.0):
@@ -60,12 +61,19 @@ def load_model(stan_file='hier_reg.stan'):
     Compile the Stan model.
     
     Parameters:
-      stan_file (str): Path to the Stan model file.
+      stan_file (str): Name of the Stan model file.
     
     Returns:
       CmdStanModel: A compiled Stan model.
     """
-    model = CmdStanModel(stan_file=stan_file)
+    # Get the directory where this script is
+    current_dir = Path(__file__).parent
+    stan_path = current_dir / stan_file
+    
+    if not stan_path.exists():
+        raise FileNotFoundError(f"Stan model file not found at: {stan_path}")
+        
+    model = CmdStanModel(stan_file=str(stan_path))
     return model
 
 # MAIN ENTRY POINT
@@ -76,14 +84,14 @@ def run_hierarchical_model(user_data, stan_file='hier_reg.stan',
     
     Parameters:
       user_data (list): List of tuples (Y, X, D) for each user.
-      stan_file (str): Path to the Stan model file.
+      stan_file (str): Name of the Stan model file.
       sigma (float): Known noise standard deviation.
       iter_sampling (int): Number of sampling iterations.
       iter_warmup (int): Number of warmup iterations.
       chains (int): Number of MCMC chains.
     
     Returns:
-      fit: CmdStanMCMC object with the posterior samples.
+      tuple: (theta_draws, proportions) containing the posterior samples and best arm proportions
     """
     data = prepare_hierarchical_data(user_data, sigma=sigma)
     model = load_model(stan_file)

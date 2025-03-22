@@ -76,5 +76,9 @@ coverage/
 *.swp
 *.swo
 
+# Python
+__pycache__/
+*.pyc
+
 # Project specific
 app-example/

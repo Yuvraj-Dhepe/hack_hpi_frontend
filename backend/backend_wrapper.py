@@ -150,7 +150,33 @@ def backend_call(user_id, database_pull):
     
     return user_samples, user_posterior_best_json
 
-
-
+if __name__ == "__main__":
+    # Create example data
+    np.random.seed(42)  # For reproducibility
     
+    # Create sample database with required columns
+    n_users = 3
+    n_observations = 10
     
+    example_data = {
+        'userid': np.repeat(['user1', 'user2', 'user3'], n_observations),
+        'timestamp': np.tile(pd.date_range(start='2024-01-01', periods=n_observations), n_users),
+        'is_private': np.repeat([False, True, False], n_observations),
+        'y1': np.random.normal(0, 1, n_users * n_observations),
+        'y2': np.random.normal(0.5, 1, n_users * n_observations),
+        'x1': np.random.normal(0, 1, n_users * n_observations),
+        'x2': np.random.normal(0, 1, n_users * n_observations),
+        'd1': np.random.binomial(1, 0.5, n_users * n_observations),
+        'd2': np.random.binomial(1, 0.5, n_users * n_observations)
+    }
+    
+    # Convert to DataFrame
+    example_df = pd.DataFrame(example_data)
+    
+    # Test the backend_call function with a non-private user
+    test_user_id = 'user1'
+    samples, posterior_best = backend_call(test_user_id, example_df)
+    
+    print(f"Results for user {test_user_id}:")
+    print(f"Samples shape: {samples.shape}")
+    print(f"Posterior best interventions: {posterior_best}")
