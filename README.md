@@ -148,29 +148,16 @@ The statistical component uses Bayesian hierarchical models to provide personali
 
 <table>
   <tr>
-    <td><img src="path/to/screenshot1.png" width="200" alt="Welcome Screen"/></td>
-    <td><img src="path/to/screenshot2.png" width="200" alt="Home Screen"/></td>
-    <td><img src="path/to/screenshot3.png" width="200" alt="Profile Page"/></td>
+    <td><img src="uploads/welcome.png" width="200" alt="Welcome Screen"/><br>Welcome Screen</td>
+    <td><img src="uploads/home.png" width="200" alt="Home Screen"/><br>Home Screen</td>
+    <td><img src="uploads/info_sleep.png" width="200" alt="Sleep Info"/><br>Sleep Info</td>
   </tr>
   <tr>
-    <td align="center">Welcome Screen</td>
-    <td align="center">Home Screen</td>
-    <td align="center">Profile Page</td>
-  </tr>
-  <tr>
-    <td><img src="path/to/screenshot4.png" width="200" alt="Tinnitus Assessment"/></td>
-    <td><img src="path/to/screenshot5.png" width="200" alt="Intervention Selection"/></td>
-    <td><img src="path/to/screenshot6.png" width="200" alt="Results Page"/></td>
-  </tr>
-  <tr>
-    <td align="center">Tinnitus Assessment</td>
-    <td align="center">Intervention Selection</td>
-    <td align="center">Results Page</td>
+    <td><img src="uploads/assesment.png" width="200" alt="Tinnitus Assessment"/><br>Tinnitus Assessment</td>
+    <td><img src="uploads/results.png" width="200" alt="Results"/><br>Results</td>
+    <td><img src="uploads/profile.png" width="200" alt="Profile Page"/><br>Profile</td>
   </tr>
 </table>
-
-> [!WARNING]  
-> The app contains features that play audio. Users with severe tinnitus should start with low volume settings and gradually adjust as needed.
 
 ## Project Structure
 
