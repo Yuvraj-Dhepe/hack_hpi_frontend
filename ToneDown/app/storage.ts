@@ -72,15 +72,15 @@ export const clearAllData = async () => {
 export const resetUserData = async () => {
   try {
     // Remove specific keys related to user data
-    await AsyncStorage.removeItem('userInfo');
-    await AsyncStorage.removeItem('setupComplete');
     await AsyncStorage.removeItem('userData');
     await AsyncStorage.removeItem('questionResponses');
+    await AsyncStorage.removeItem('userInfo');
+    await AsyncStorage.removeItem('setupComplete');
     
     console.log('User data reset successfully');
     return true;
   } catch (error) {
     console.error('Failed to reset user data:', error);
-    return false;
+    throw error; // Re-throw to allow handling in the calling function
   }
 };

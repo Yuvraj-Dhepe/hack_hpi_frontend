@@ -9,21 +9,25 @@ import BottomNav from './BottomNav';
 import { saveQuestionResponse, getQuestionResponses, getUserData } from './storage';
 
 export default function Feedback() {
+  // Always start with middle value, ignore previous responses
   const [sliderValue, setSliderValue] = useState(3);
   const [isHovering, setIsHovering] = useState(false);
   const [userData, setUserData] = useState(null);
   const [allResponses, setAllResponses] = useState({});
 
+  // Modify the useEffect to only load user data, not previous feedback
   useEffect(() => {
     const loadData = async () => {
-      const user = await getUserData();
-      const responses = await getQuestionResponses();
-      
-      setUserData(user);
-      setAllResponses(responses);
-      
-      if (responses.feedback) {
-        setSliderValue(responses.feedback);
+      try {
+        const userData = await getUserData();
+        setUserData(userData);
+        
+        const responses = await getQuestionResponses();
+        setAllResponses(responses);
+        
+        // Don't set sliderValue from previous feedback
+      } catch (error) {
+        console.error('Error loading data:', error);
       }
     };
     
@@ -135,7 +139,8 @@ export default function Feedback() {
                   style={styles.slider}
                   minimumValue={1}
                   maximumValue={5}
-                  step={0.1}
+                  // Remove the step property to allow continuous values
+                  // step={0.1}
                   value={sliderValue}
                   onValueChange={(value) => {
                     setSliderValue(value);

@@ -28,10 +28,23 @@ export default function Start() {
     checkUserData();
   }, []);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     console.log("Continue button pressed");
-    // Navigate to user information page to collect data
-    router.push('/user_information');
+    try {
+      // Check if user data exists
+      const userData = await AsyncStorage.getItem('userData');
+      if (userData) {
+        // User data exists, go to home page
+        router.replace('/home');
+      } else {
+        // No user data, go to user information page
+        router.push('/user_information');
+      }
+    } catch (error) {
+      console.error('Error checking user data:', error);
+      // Default to user information page if there's an error
+      router.push('/user_information');
+    }
   };
 
   return (

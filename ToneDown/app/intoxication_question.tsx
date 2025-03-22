@@ -9,19 +9,21 @@ import BottomNav from './BottomNav';
 import { saveQuestionResponse, getQuestionResponses } from './storage';
 
 export default function IntoxicationQuestion() {
-  const [selectedIntoxication, setSelectedIntoxication] = useState('');
+  // Select the middle option by default (index 2 in a 4-item array)
   const intoxicationOptions = ["Alcohol", "Drugs", "Smoke", "Am Clean"];
+  const [selectedIntoxication, setSelectedIntoxication] = useState(intoxicationOptions[2]);
 
-  useEffect(() => {
-    const loadPreviousResponse = async () => {
-      const responses = await getQuestionResponses();
-      if (responses.intoxication) {
-        setSelectedIntoxication(responses.intoxication);
-      }
-    };
-    
-    loadPreviousResponse();
-  }, []);
+  // Remove or modify the useEffect that loads previous responses
+  // useEffect(() => {
+  //   const loadPreviousResponse = async () => {
+  //     const responses = await getQuestionResponses();
+  //     if (responses.intoxication) {
+  //       setSelectedIntoxication(responses.intoxication);
+  //     }
+  //   };
+  //   
+  //   loadPreviousResponse();
+  // }, []);
 
   const handleContinue = async () => {
     if (selectedIntoxication) {

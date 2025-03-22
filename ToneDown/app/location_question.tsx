@@ -27,20 +27,22 @@ interface QuestionResponses {
 }
 
 export default function LocationQuestion() {
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const locations = ["Home", "Work", "Other"];
+  // Select the middle option by default (index 1 in a 3-item array)
+  const [selectedLocation, setSelectedLocation] = useState(locations[1]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const loadPreviousResponse = async () => {
-      const responses = await getQuestionResponses();
-      if (responses.location) {
-        setSelectedLocation(responses.location);
-      }
-    };
-    
-    loadPreviousResponse();
-  }, []);
+  // Remove or modify the useEffect that loads previous responses
+  // useEffect(() => {
+  //   const loadPreviousResponse = async () => {
+  //     const responses = await getQuestionResponses();
+  //     if (responses.location) {
+  //       setSelectedLocation(responses.location);
+  //     }
+  //   };
+  //   
+  //   loadPreviousResponse();
+  // }, []);
 
   const convertToCSV = (userData: { id?: string }, responses: Record<string, any>) => {
     // Create headers - simplified to only include uid and data points

@@ -9,19 +9,21 @@ import BottomNav from './BottomNav';
 import { saveQuestionResponse, getQuestionResponses } from './storage';
 
 export default function StressQuestion() {
+  // Always start with middle value, ignore previous responses
   const [sliderValue, setSliderValue] = useState(3);
   const [isHovering, setIsHovering] = useState(false);
 
-  useEffect(() => {
-    const loadPreviousResponse = async () => {
-      const responses = await getQuestionResponses();
-      if (responses.stress) {
-        setSliderValue(responses.stress);
-      }
-    };
-    
-    loadPreviousResponse();
-  }, []);
+  // Remove or modify the useEffect that loads previous responses
+  // useEffect(() => {
+  //   const loadPreviousResponse = async () => {
+  //     const responses = await getQuestionResponses();
+  //     if (responses.stress) {
+  //       setSliderValue(responses.stress);
+  //     }
+  //   };
+  //   
+  //   loadPreviousResponse();
+  // }, []);
 
   const handleContinue = async () => {
     await saveQuestionResponse('stress', sliderValue);
@@ -59,7 +61,6 @@ export default function StressQuestion() {
                 style={styles.slider}
                 minimumValue={1}
                 maximumValue={5}
-                step={0.1}
                 value={sliderValue}
                 onValueChange={(value) => {
                   setSliderValue(value);
