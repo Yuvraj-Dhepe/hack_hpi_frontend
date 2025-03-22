@@ -1,11 +1,8 @@
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
 import { Image } from 'react-native';
-import BottomNav from './BottomNav'; // Import BottomNav
-import { styles, COLORS } from './styles';
+import BottomNav from '../BottomNav'; // Import BottomNav
+import { styles, COLORS } from '../styles';
 
 export default function MusicScreen() {
   const router = useRouter();
@@ -28,7 +25,7 @@ export default function MusicScreen() {
           <Text style={{textAlign: 'center', marginHorizontal: 20, marginBottom: 10}}>
             Music can be a great way to relax and reduce stress. Find out what works best for you!
           </Text>
-          <Image source={require('../assets/images/Music-cuate.svg')} 
+          <Image source={require('../../assets/images/Music-cuate.svg')} 
             style={{ width: 250, height: 250, alignSelf: 'center', marginTop: -10 }}
           />
           

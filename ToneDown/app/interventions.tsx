@@ -10,33 +10,33 @@ export default function HomeScreen() {
       id: 'music', 
       title: 'Listening to Music', 
       backgroundColor: COLORS.lightgreen, 
-      route: '/music'
+      route: '/interventions/music'
     },
     { 
       id: 'id2', 
       title: 'Improve Sleep', 
       backgroundColor: COLORS.blue,
-      route: '/confidence',
+      route: '/interventions/sleep',
       hasPlant: true
     },
     { 
       id: 'id3', 
       title: 'Distraction', 
       backgroundColor: COLORS.yellow,
-      route: '/diversity',
+      route: '/interventions/distraction',
       hasPlant: true
     },
     { 
       id: 'id4', 
       title: 'Exercise', 
       backgroundColor: COLORS.darkbeige,
-      route: '/behavioral'
+      route: '/interventions/excercise'
     },
     { 
       id: 'id5', 
       title: 'Mindfulness', 
       backgroundColor: COLORS.red,
-      route: '/mental-health'
+      route: '/interventions/mindfulness'
     }
   ];
 
