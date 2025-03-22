@@ -21,9 +21,14 @@ def upload_csv():
         
         csv_data = request.json['csv_data']
         user_id = request.json.get('user_id', 'unknown')
+        with_feedback = request.json.get('with_feedback', False)
         
-        # Create a unique filename with user_id
-        filename = f"tinnitus_data.csv"
+        # Create a unique filename based on whether it includes feedback
+        if with_feedback:
+            filename = "tinnitus_data_feedback.csv"
+        else:
+            filename = "tinnitus_data.csv"
+            
         filepath = os.path.join(UPLOAD_DIR, filename)
         
         # Parse the CSV string into a pandas DataFrame
@@ -43,7 +48,7 @@ def upload_csv():
         combined_df.to_csv(filepath, index=False)
         
         # Optional: Print summary statistics
-        print(f"Received data for user {user_id}:")
+        print(f"Received data for user {user_id} with feedback={with_feedback}:")
         print(f"Shape: {new_df.shape}")
         print(f"Columns: {new_df.columns.tolist()}")
         print(f"Total records in file: {len(combined_df)}")
@@ -52,7 +57,8 @@ def upload_csv():
             'success': True,
             'message': 'CSV data received and saved successfully',
             'filename': filename,
-            'record_count': len(combined_df)
+            'record_count': len(combined_df),
+            'with_feedback': with_feedback
         }), 200
         
     except Exception as e:

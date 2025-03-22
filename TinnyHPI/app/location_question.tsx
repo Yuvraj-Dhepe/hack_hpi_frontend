@@ -78,7 +78,8 @@ export default function LocationQuestion() {
         },
         body: JSON.stringify({
           csv_data: csvData,
-          user_id: userId
+          user_id: userId,
+          with_feedback: false
         }),
       });
       

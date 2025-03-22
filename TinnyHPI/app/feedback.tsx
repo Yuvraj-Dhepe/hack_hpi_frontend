@@ -33,19 +33,74 @@ export default function Feedback() {
   const handleSubmit = async () => {
     await saveQuestionResponse('feedback', sliderValue);
     
-    // Here you could send all data to your backend
-    const allData = {
-      user: userData,
-      responses: {
-        ...allResponses,
-        feedback: sliderValue
-      }
-    };
+    // Get all responses and user data
+    const responses = await getQuestionResponses();
+    const userData = await getUserData();
     
-    console.log('All collected data:', allData);
+    // Convert to CSV with feedback
+    const csvData = convertToCSV(userData, responses);
+    
+    // Send to backend with feedback flag
+    try {
+      await sendDataToBackend(csvData, userData?.id || 'anonymous', true);
+      console.log('Feedback data sent to backend');
+    } catch (error) {
+      console.error('Error sending feedback data:', error);
+    }
     
     // Navigate to home
     router.push('/home');
+  };
+
+  const convertToCSV = (userData: { id?: string }, responses: Record<string, any>) => {
+    // Create headers including feedback
+    const headers = ['uid', 'tinnitus-initial', 'stress', 'sleep', 'noise', 'intoxication', 'location', 'feedback', 'timestamp'];
+    
+    // Create data row
+    const timestamp = new Date().toISOString();
+    const userId = userData?.id || 'anonymous';
+    const data = [
+      userId,
+      responses.tinnitus || '',
+      responses.stress || '',
+      responses.sleep || '',
+      responses.noise || '',
+      responses.intoxication || '',
+      responses.location || '',
+      responses.feedback || '',
+      timestamp
+    ];
+    
+    // Combine headers and data
+    const csvContent = [
+      headers.join(','),
+      data.join(',')
+    ].join('\n');
+    
+    return csvContent;
+  };
+
+  const sendDataToBackend = async (csvData: string, userId: string, withFeedback: boolean = false) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/upload-csv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          csv_data: csvData,
+          user_id: userId,
+          with_feedback: withFeedback
+        }),
+      });
+      
+      const result = await response.json();
+      console.log('Backend response:', result);
+      return result;
+    } catch (error) {
+      console.error('Error sending data to backend:', error);
+      throw error;
+    }
   };
 
   const renderSliderLabels = () => {
