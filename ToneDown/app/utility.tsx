@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
-import { styles as globalStyles, COLORS } from './styles';
+import { styles, COLORS } from './styles';
 
 interface QuestionProps {
   title: string;
   value: string | number;
   setValue: (value: any) => void;
-  inputType: 'text' | 'number' | 'button' | 'slider';
+  inputType: 'text' | 'number' | 'button' | 'slider' | "buttons";
   options: string[];
 }
 
@@ -48,52 +48,37 @@ export default function Question({ title, value, setValue, inputType, options }:
             ))}
           </View>
         );
+
+      case 'buttons':
+          if (options == null) {
+            options = ["m", "f", "d"];  
+          }
+        return (
+          <View style={styles.buttonGroup}>
+            {options.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={[
+                  styles.optionButton,
+                  value === option && styles.optionButtonSelected,
+                ]}
+                onPress={() => setValue(option)}
+              >
+                <ThemedText style={styles.optionButtonText}>{option}</ThemedText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        );
       default:
         return null;
     }
   };
 
   return (
-    <View style={styles.questionContainer}>
-      <ThemedText style={styles.questionTitle}>{title}</ThemedText>
+    <View style={styles.container}>
+      <ThemedText style={styles.title}>{title}</ThemedText>
       {renderInput()}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  questionContainer: {
-    width: '100%',
-    marginBottom: 20,
-  },
-  questionTitle: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    backgroundColor: COLORS.white,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
-  optionButton: {
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: COLORS.lightGray,
-    minWidth: 60,
-    alignItems: 'center',
-  },
-  selectedButton: {
-    backgroundColor: COLORS.primary,
-  },
-  optionText: {
-    color: COLORS.text,
-  }
-});

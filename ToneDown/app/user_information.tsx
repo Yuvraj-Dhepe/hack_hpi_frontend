@@ -49,7 +49,7 @@ export default function UserInformation() {
         
         <Question title="What is your name?" value={name} setValue={setName} inputType="text" options={[]}/>
         <Question title="How old are you?" value={age} setValue={setAge} inputType="number" options={[]}/>
-        <Question title="What is your sex?" value={sex} setValue={setSex} inputType="button" options={["m","f","d"]}/>
+        <Question title="What is your sex?" value={sex} setValue={setSex} inputType="buttons" options={["m","f","d"]}/>
 
         <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
           <TouchableOpacity style={styles.button} onPress={handleSaveUserData}>
