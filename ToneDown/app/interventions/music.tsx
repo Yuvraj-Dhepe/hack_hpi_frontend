@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Image } from 'react-native';
-import BottomNav from '../BottomNav'; // Import BottomNav
+import BottomNav from '../BottomNav';
 import { styles, COLORS } from '../styles';
 
 export default function MusicScreen() {
@@ -17,7 +17,7 @@ export default function MusicScreen() {
   ];
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.background, paddingBottom: 60 }}>
       {/* ScrollView to make content scrollable */}
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
@@ -44,12 +44,9 @@ export default function MusicScreen() {
               </TouchableOpacity>
             ))}
           </View>
-          
-          {/* Add padding at the bottom to ensure content doesn't get hidden behind BottomNav */}
-          <View style={{ paddingBottom: 70 }} />
         </View>
       </ScrollView>
-      <BottomNav /> {/* Include BottomNav */}
+      <BottomNav />
     </View>
   );
 }

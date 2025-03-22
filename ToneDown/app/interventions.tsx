@@ -41,7 +41,7 @@ export default function HomeScreen() {
   ];
 
   return (
-    <View style={{height: '100%'}}>
+    <View style={{flex: 1, paddingBottom: 60}}>
     <SafeAreaView style={styles.container}>
 
       <View style={styles.content}>
@@ -71,9 +71,7 @@ export default function HomeScreen() {
       </View>
 
     </SafeAreaView>
-    <View style={{height: 65}}>
-          <BottomNav/>
-    </View>
+    <BottomNav/>
     </View>
   );
 }
