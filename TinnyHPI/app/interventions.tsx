@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-na
 import { Link } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import { COLORS } from './styles';
+import BottomNav from './BottomNav';
 
 export default function HomeScreen() {
   const categories = [
@@ -40,6 +41,7 @@ export default function HomeScreen() {
   ];
 
   return (
+    <View style={{height: '100%'}}>
     <SafeAreaView style={styles.container}>
 
       <View style={styles.content}>
@@ -68,20 +70,12 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navButton}>
-          <Feather name="home" size={24} color="#000" />
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.mainNavButton}>
-          <Feather name="grid" size={24} color="#fff" />
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navButton}>
-          <Feather name="user" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
+    <View style={{height: 65}}>
+          <BottomNav/>
+          </View>
+
+    </View>
   );
 }
 
@@ -153,25 +147,6 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#EEE',
-  },
-  navButton: {
-    padding: 12,
-  },
-  mainNavButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
   },

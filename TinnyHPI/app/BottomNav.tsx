@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome5  } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from './styles';
 
@@ -15,7 +15,7 @@ export default function BottomNav() {
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.mainNavButton} onPress={() => navigation.navigate('Explore')}>
-        <Feather name="grid" size={24} color="#fff" />
+      <FontAwesome5 name="lightbulb" size={24} color="#fff" />
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Profile')}>
@@ -42,5 +42,9 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#000',
     borderRadius: 30,
-  },
+    width: 60,  // Set a specific width
+    height: 60, // Same as width to make it circular
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

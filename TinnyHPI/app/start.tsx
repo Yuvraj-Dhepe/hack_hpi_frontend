@@ -47,7 +47,7 @@ export default function Start() {
 
 const localstyle = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 12,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
