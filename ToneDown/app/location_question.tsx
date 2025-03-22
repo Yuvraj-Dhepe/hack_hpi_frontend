@@ -147,7 +147,7 @@ export default function LocationQuestion() {
               title="" 
               value={selectedLocation || ''} 
               setValue={setSelectedLocation} 
-              inputType="button" 
+              inputType="buttons" 
               options={locations}
             />
           </View>
