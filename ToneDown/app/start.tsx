@@ -59,11 +59,9 @@ export default function Start() {
           </ThemedText>
         </ThemedView>
         <ThemedText type="default" style={styles.text} >
-            This app will help with you tinnitus by proposing interventions. 
-            Just open the app when you experinece difficulties with tinnitus. 
-            We then choose the best intervention based on your needs.
-            Over time, the app will learn how to best help you.
-            You can find the possible interventions below and remove and that you do not want.
+            ToneDown proposes personalized tinnitus interventions based on your needs. 
+            Open the app when experiencing difficulties, and it will learn to help you better over time. 
+            Customize available interventions below.
         </ThemedText>
         
         <TouchableOpacity 
