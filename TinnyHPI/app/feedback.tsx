@@ -1,15 +1,52 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import Slider from '@react-native-community/slider';
 import { styles as globalStyles, COLORS } from './styles';
 import BottomNav from './BottomNav';
+import { saveQuestionResponse, getQuestionResponses, getUserData } from './storage';
 
 export default function Feedback() {
   const [sliderValue, setSliderValue] = useState(3);
   const [isHovering, setIsHovering] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [allResponses, setAllResponses] = useState({});
+
+  useEffect(() => {
+    const loadData = async () => {
+      const user = await getUserData();
+      const responses = await getQuestionResponses();
+      
+      setUserData(user);
+      setAllResponses(responses);
+      
+      if (responses.feedback) {
+        setSliderValue(responses.feedback);
+      }
+    };
+    
+    loadData();
+  }, []);
+
+  const handleSubmit = async () => {
+    await saveQuestionResponse('feedback', sliderValue);
+    
+    // Here you could send all data to your backend
+    const allData = {
+      user: userData,
+      responses: {
+        ...allResponses,
+        feedback: sliderValue
+      }
+    };
+    
+    console.log('All collected data:', allData);
+    
+    // Navigate to home
+    router.push('/home');
+  };
 
   const renderSliderLabels = () => {
     return (
@@ -81,11 +118,12 @@ export default function Feedback() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Link href="/home">
-            <TouchableOpacity style={[globalStyles.button, styles.button]}>
-              <ThemedText style={globalStyles.buttonText}>Submit</ThemedText>
-            </TouchableOpacity>
-          </Link>
+          <TouchableOpacity 
+            style={[globalStyles.button, styles.button]}
+            onPress={handleSubmit}
+          >
+            <ThemedText style={globalStyles.buttonText}>Submit</ThemedText>
+          </TouchableOpacity>
         </View>
       </ThemedView>
       <BottomNav />

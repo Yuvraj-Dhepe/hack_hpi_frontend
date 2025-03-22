@@ -1,14 +1,32 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import Slider from '@react-native-community/slider';
 import { styles as globalStyles, COLORS } from './styles';
+import BottomNav from './BottomNav';
+import { saveQuestionResponse, getQuestionResponses } from './storage';
 
 export default function NoisyEnvironment() {
   const [sliderValue, setSliderValue] = useState(3);
   const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const loadPreviousResponse = async () => {
+      const responses = await getQuestionResponses();
+      if (responses.noise) {
+        setSliderValue(responses.noise);
+      }
+    };
+    
+    loadPreviousResponse();
+  }, []);
+
+  const handleContinue = async () => {
+    await saveQuestionResponse('noise', sliderValue);
+    router.push('/loud_noise_exposure');
+  };
 
   const renderSliderLabels = () => {
     return (
@@ -20,72 +38,76 @@ export default function NoisyEnvironment() {
   };
 
   return (
-    <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
-      <View style={styles.cardContainer}>
-        <View style={styles.circleIconContainer}>
-          <ThemedText style={styles.icon}>�</ThemedText>
-        </View>
-        
-        <View style={styles.cardContent}>
-          <ThemedText type="title" style={styles.title}>
-          Noise Level
-          </ThemedText>
+    <View style={{height: "100%"}}>
+      <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
+        <View style={styles.cardContainer}>
+          <View style={styles.circleIconContainer}>
+            <ThemedText style={styles.icon}>�</ThemedText>
+          </View>
           
-          <ThemedText style={styles.question}>
-          How noisy is your environment?
-          </ThemedText>
-          
-          <View style={styles.sliderContainer}>
-            <View style={styles.sliderWithValueContainer}>
-              <Slider
-                style={styles.slider}
-                minimumValue={1}
-                maximumValue={5}
-                step={0.1}
-                value={sliderValue}
-                onValueChange={(value) => {
-                  setSliderValue(value);
-                  setIsHovering(true);
-                }}
-                onSlidingComplete={() => {
-                  setTimeout(() => setIsHovering(false), 1500);
-                }}
-                minimumTrackTintColor="#3498db"
-                maximumTrackTintColor="#bdc3c7"
-                thumbTintColor="#2980b9"
-              />
-              {isHovering && (
-                <View 
-                  style={[
-                    styles.hoverValueContainer, 
-                    { left: `${((sliderValue - 1) / 4) * 100}%` }
-                  ]}
-                >
-                  <ThemedText style={styles.hoverValue}>{sliderValue.toFixed(1)}</ThemedText>
-                </View>
-              )}
-            </View>
-            {renderSliderLabels()}
-            <ThemedText style={{
-              fontSize: 24,
-              fontWeight: 'bold',
-              marginTop: 10,
-              color: '#2980b9'
-            }}>
-              {sliderValue.toFixed(1)}
+          <View style={styles.cardContent}>
+            <ThemedText type="title" style={styles.title}>
+            Noise Level
             </ThemedText>
+            
+            <ThemedText style={styles.question}>
+            How noisy is your environment?
+            </ThemedText>
+            
+            <View style={styles.sliderContainer}>
+              <View style={styles.sliderWithValueContainer}>
+                <Slider
+                  style={styles.slider}
+                  minimumValue={1}
+                  maximumValue={5}
+                  step={0.1}
+                  value={sliderValue}
+                  onValueChange={(value) => {
+                    setSliderValue(value);
+                    setIsHovering(true);
+                  }}
+                  onSlidingComplete={() => {
+                    setTimeout(() => setIsHovering(false), 1500);
+                  }}
+                  minimumTrackTintColor="#3498db"
+                  maximumTrackTintColor="#bdc3c7"
+                  thumbTintColor="#2980b9"
+                />
+                {isHovering && (
+                  <View 
+                    style={[
+                      styles.hoverValueContainer, 
+                      { left: `${((sliderValue - 1) / 4) * 100}%` }
+                    ]}
+                  >
+                    <ThemedText style={styles.hoverValue}>{sliderValue.toFixed(1)}</ThemedText>
+                  </View>
+                )}
+              </View>
+              {renderSliderLabels()}
+              <ThemedText style={{
+                fontSize: 24,
+                fontWeight: 'bold',
+                marginTop: 10,
+                color: '#2980b9'
+              }}>
+                {sliderValue.toFixed(1)}
+              </ThemedText>
+            </View>
           </View>
         </View>
-      </View>
 
-      <View style={styles.buttonContainer}>
-        <Link href="/loud_noise_exposure">
-          <TouchableOpacity style={[globalStyles.button, styles.button]}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={[globalStyles.button, styles.button]}
+            onPress={handleContinue}
+          >
             <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
           </TouchableOpacity>
-        </Link>
-      </View>
-    </ThemedView>
+        </View>
+      </ThemedView>
+      <BottomNav />
+    </View>
   );
 }
 

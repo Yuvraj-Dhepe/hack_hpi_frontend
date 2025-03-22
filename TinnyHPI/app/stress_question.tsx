@@ -1,17 +1,32 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import Slider from '@react-native-community/slider';
 import { styles as globalStyles, COLORS } from './styles';
-import BottomNav from './BottomNav'; // Import BottomNav
-
+import BottomNav from './BottomNav';
+import { saveQuestionResponse, getQuestionResponses } from './storage';
 
 export default function StressQuestion() {
   const [sliderValue, setSliderValue] = useState(3);
   const [isHovering, setIsHovering] = useState(false);
 
+  useEffect(() => {
+    const loadPreviousResponse = async () => {
+      const responses = await getQuestionResponses();
+      if (responses.stress) {
+        setSliderValue(responses.stress);
+      }
+    };
+    
+    loadPreviousResponse();
+  }, []);
+
+  const handleContinue = async () => {
+    await saveQuestionResponse('stress', sliderValue);
+    router.push('/sleep_question');
+  };
   const renderSliderLabels = () => {
     return (
       <View style={styles.sliderLabelsContainer}>
@@ -82,11 +97,12 @@ export default function StressQuestion() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Link href="/sleep_question">
-          <TouchableOpacity style={[globalStyles.button, styles.button]}>
-            <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
-          </TouchableOpacity>
-        </Link>
+        <TouchableOpacity 
+          style={[globalStyles.button, styles.button]}
+          onPress={handleContinue}
+        >
+          <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
+        </TouchableOpacity>
       </View>
     </ThemedView>
     <BottomNav />

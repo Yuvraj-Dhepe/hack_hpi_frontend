@@ -1,56 +1,73 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import Question from './utility';
-import BottomNav from './BottomNav'; // Import BottomNav
-
+import BottomNav from './BottomNav';
+import { saveQuestionResponse, getQuestionResponses } from './storage';
 
 export default function IntoxicationQuestion() {
   const [selectedIntoxication, setSelectedIntoxication] = useState(null);
   const intoxicationOptions = ["Alcohol", "Drugs", "Smoke", "Am Clean"];
 
-  return (
-    <View style={{height: '100%'}}>
-    <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
-      <View style={styles.cardContainer}>
-        <View style={styles.circleIconContainer}>
-          <ThemedText style={styles.icon}>🍷</ThemedText>
-        </View>
-        
-        <View style={styles.cardContent}>
-          <ThemedText type="title" style={styles.title}>
-            Substance Use
-          </ThemedText>
-          
-          <ThemedText style={styles.question}>
-            Are you intoxicated?
-          </ThemedText>
-          
-          <Question 
-            title="" 
-            value={selectedIntoxication} 
-            setValue={setSelectedIntoxication} 
-            inputType="buttonsWider" 
-            options={intoxicationOptions}
-          />
-        </View>
-      </View>
+  useEffect(() => {
+    const loadPreviousResponse = async () => {
+      const responses = await getQuestionResponses();
+      if (responses.intoxication) {
+        setSelectedIntoxication(responses.intoxication);
+      }
+    };
+    
+    loadPreviousResponse();
+  }, []);
 
-      <View style={styles.buttonContainer}>
-        <Link href="/location_question">
+  const handleContinue = async () => {
+    if (selectedIntoxication) {
+      await saveQuestionResponse('intoxication', selectedIntoxication);
+      router.push('/location_question');
+    }
+  };
+
+  return (
+    <View style={{height: "100%"}}>
+      <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
+        <View style={styles.cardContainer}>
+          <View style={styles.circleIconContainer}>
+            <ThemedText style={styles.icon}>🍷</ThemedText>
+          </View>
+        
+          <View style={styles.cardContent}>
+            <ThemedText type="title" style={styles.title}>
+              Substance Use
+            </ThemedText>
+          
+            <ThemedText style={styles.question}>
+              Are you intoxicated?
+            </ThemedText>
+          
+            <Question 
+              title="" 
+              value={selectedIntoxication} 
+              setValue={setSelectedIntoxication} 
+              inputType="buttonsWider" 
+              options={intoxicationOptions}
+            />
+          </View>
+        </View>
+
+        <View style={styles.buttonContainer}>
           <TouchableOpacity 
             style={[globalStyles.button, styles.button, !selectedIntoxication && styles.buttonDisabled]}
             disabled={!selectedIntoxication}
+            onPress={handleContinue}
           >
             <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
           </TouchableOpacity>
-        </Link>
-      </View>
-    </ThemedView>
-    <BottomNav /> {/* Include BottomNav */}
+        </View>
+      </ThemedView>
+      <BottomNav />
     </View>
   );
 }

@@ -1,52 +1,74 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import Question from './utility';
+import BottomNav from './BottomNav';
+import { saveQuestionResponse, getQuestionResponses } from './storage';
 
 export default function LocationQuestion() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const locations = ["Home", "Work", "Other"];
 
-  return (
-    <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
-      <View style={styles.cardContainer}>
-        <View style={styles.circleIconContainer}>
-          <ThemedText style={styles.icon}>📍</ThemedText>
-        </View>
-        
-        <View style={styles.cardContent}>
-          <ThemedText type="title" style={styles.title}>
-            Current Location
-          </ThemedText>
-          
-          <ThemedText style={styles.question}>
-            Where are you at the moment?
-          </ThemedText>
-          
-          <Question 
-            title="" 
-            value={selectedLocation} 
-            setValue={setSelectedLocation} 
-            inputType="buttonsWider" 
-            options={locations}
-          />
-        </View>
-      </View>
+  useEffect(() => {
+    const loadPreviousResponse = async () => {
+      const responses = await getQuestionResponses();
+      if (responses.location) {
+        setSelectedLocation(responses.location);
+      }
+    };
+    
+    loadPreviousResponse();
+  }, []);
 
-      <View style={styles.buttonContainer}>
-        <Link href="/results">
+  const handleContinue = async () => {
+    if (selectedLocation) {
+      await saveQuestionResponse('location', selectedLocation);
+      router.push('/results');
+    }
+  };
+
+  return (
+    <View style={{height: "100%"}}>
+      <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
+        <View style={styles.cardContainer}>
+          <View style={styles.circleIconContainer}>
+            <ThemedText style={styles.icon}>📍</ThemedText>
+          </View>
+          
+          <View style={styles.cardContent}>
+            <ThemedText type="title" style={styles.title}>
+              Current Location
+            </ThemedText>
+            
+            <ThemedText style={styles.question}>
+              Where are you at the moment?
+            </ThemedText>
+            
+            <Question 
+              title="" 
+              value={selectedLocation} 
+              setValue={setSelectedLocation} 
+              inputType="buttonsWider" 
+              options={locations}
+            />
+          </View>
+        </View>
+
+        <View style={styles.buttonContainer}>
           <TouchableOpacity 
             style={[globalStyles.button, styles.button, !selectedLocation && styles.buttonDisabled]}
             disabled={!selectedLocation}
+            onPress={handleContinue}
           >
             <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
           </TouchableOpacity>
-        </Link>
-      </View>
-    </ThemedView>
+        </View>
+      </ThemedView>
+      <BottomNav />
+    </View>
   );
 }
 
