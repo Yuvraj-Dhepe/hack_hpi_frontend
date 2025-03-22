@@ -85,16 +85,11 @@ export default function Results() {
   };
 
   return (
-    <View style={{height: "100%"}}>
+    <View style={{ flex: 1, paddingBottom: 60 }}>
       <ThemedView style={[globalStyles.container, styles.container]}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title" style={styles.title}>
-            Your
-          </ThemedText>
-          <ThemedText type="title" style={styles.titleBold}>
-            Results
-          </ThemedText>
-        </ThemedView>
+        <ThemedText type="title" style={styles.title}>
+          Your Results
+        </ThemedText>
 
         {isLoading ? (
           <ThemedText style={styles.loadingText}>Loading your analysis...</ThemedText>
