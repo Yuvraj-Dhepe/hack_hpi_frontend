@@ -52,6 +52,25 @@ export const getQuestionResponses = async () => {
   }
 };
 
+// Selected intervention
+export const saveSelectedIntervention = async (intervention: string) => {
+  try {
+    await AsyncStorage.setItem('selectedIntervention', intervention);
+  } catch (error) {
+    console.error('Error saving selected intervention:', error);
+  }
+};
+
+export const getSelectedIntervention = async () => {
+  try {
+    const intervention = await AsyncStorage.getItem('selectedIntervention');
+    return intervention;
+  } catch (error) {
+    console.error('Error retrieving selected intervention:', error);
+    return null;
+  }
+};
+
 // Clear all data
 export const clearAllData = async () => {
   try {

@@ -2,10 +2,20 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import BottomNav from './BottomNav';
-import { getUserData } from './storage';
+import { getUserData, saveSelectedIntervention } from './storage';
+
+// Define intervention emojis
+const INTERVENTION_EMOJIS: Record<string, string> = {
+  'Take a walk': '🚶',
+  'Listen to calming music': '🎵',
+  'Deep breathing exercise': '🧘',
+  'Mindfulness meditation': '🧘‍♂️',
+  'Progressive muscle relaxation': '💪',
+  'White noise': '🌊'
+};
 
 export default function Results() {
   const [isLoading, setIsLoading] = useState(true);
@@ -69,6 +79,11 @@ export default function Results() {
     );
   };
 
+  const handleInterventionClick = async (intervention: string) => {
+    await saveSelectedIntervention(intervention);
+    router.push('/feedback');
+  };
+
   return (
     <View style={{height: "100%"}}>
       <ThemedView style={[globalStyles.container, styles.container]}>
@@ -88,21 +103,22 @@ export default function Results() {
         ) : (
           <View style={styles.resultsContainer}>
             {Object.entries(diagnosisProbabilities).map(([key, value]) => (
-              <View key={key} style={styles.resultItem}>
-                <ThemedText style={styles.intervention}>
-                  {key}: {Math.round(value * 100)}%
-                </ThemedText>
+              <TouchableOpacity 
+                key={key} 
+                style={styles.resultItem}
+                onPress={() => handleInterventionClick(key)}
+              >
+                <View style={styles.interventionRow}>
+                  <ThemedText style={styles.emoji}>{INTERVENTION_EMOJIS[key]}</ThemedText>
+                  <ThemedText style={styles.intervention}>
+                    {key}: {Math.round(value * 100)}%
+                  </ThemedText>
+                </View>
                 {renderProbabilityBar(value)}
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         )}
-
-        <Link href="/feedback">
-          <TouchableOpacity style={globalStyles.button}>
-            <ThemedText style={globalStyles.buttonText}>Continue</ThemedText>
-          </TouchableOpacity>
-        </Link>
       </ThemedView>
       <BottomNav />
     </View>
@@ -141,8 +157,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 30,
   },
+  interventionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  emoji: {
+    fontSize: 20,
+    marginRight: 10,
+  },
   resultItem: {
     marginBottom: 15,
+    padding: 10,
+    backgroundColor: COLORS.offwhite,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   intervention: {
     fontSize: 16,

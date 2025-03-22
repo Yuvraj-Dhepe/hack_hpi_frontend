@@ -6,7 +6,7 @@ import { Link, router } from 'expo-router';
 import Slider from '@react-native-community/slider';
 import { styles as globalStyles, COLORS } from './styles';
 import BottomNav from './BottomNav';
-import { saveQuestionResponse, getQuestionResponses, getUserData } from './storage';
+import { saveQuestionResponse, getQuestionResponses, getUserData, getSelectedIntervention } from './storage';
 
 export default function Feedback() {
   // Always start with middle value, ignore previous responses
@@ -14,6 +14,7 @@ export default function Feedback() {
   const [isHovering, setIsHovering] = useState(false);
   const [userData, setUserData] = useState(null);
   const [allResponses, setAllResponses] = useState({});
+  const [selectedIntervention, setSelectedIntervention] = useState<string | null>(null);
 
   // Modify the useEffect to only load user data, not previous feedback
   useEffect(() => {
@@ -25,7 +26,8 @@ export default function Feedback() {
         const responses = await getQuestionResponses();
         setAllResponses(responses);
         
-        // Don't set sliderValue from previous feedback
+        const intervention = await getSelectedIntervention();
+        setSelectedIntervention(intervention);
       } catch (error) {
         console.error('Error loading data:', error);
       }
@@ -131,6 +133,12 @@ export default function Feedback() {
             <ThemedText type="title" style={styles.title}>
               Feedback
             </ThemedText>
+            
+            {selectedIntervention && (
+              <ThemedText style={styles.selectedIntervention}>
+                Selected Intervention: {selectedIntervention}
+              </ThemedText>
+            )}
             
             <ThemedText style={styles.question}>
               How helpful was the intervention?
@@ -299,5 +307,12 @@ const styles = StyleSheet.create({
   button: {
     minWidth: 200,
     backgroundColor: COLORS.beige,
-  }
+  },
+  selectedIntervention: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: COLORS.green,
+    fontWeight: 'bold',
+  },
 });
