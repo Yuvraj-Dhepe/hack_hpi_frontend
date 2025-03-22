@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 // Define your global color scheme and other constants3
 
 export const COLORS = {
-  background: "#f5f4f9",
+    background: "#f2f2f2",
+  backgroundGrey: "#f5f4f9",
     yellow: "#f2dd8e",
     beige: "#f1e6df",
     lightblue: "#bfc9f8",
@@ -16,6 +17,7 @@ export const COLORS = {
     darkbeige: "#eddbd1",
     textPrimary: "#131313",
     textSecondary: "#131313",
+    darkYellow: "#c9b255"
 };
 
 // Global Styles

@@ -4,12 +4,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import { styles, COLORS } from './styles';
+import { Image } from 'react-native';
 
 export default function Start() {
   const router = useRouter();
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={localstyle.container}>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title" style={styles.title}>
             Welcome to
@@ -32,6 +33,20 @@ export default function Start() {
             </TouchableOpacity>
         </Link>
         </View>
-    </ThemedView>
+        <Image 
+          source={require('../assets/images/Mindfulness-cuate.svg')} 
+          style={{ width: 250, height: 250, alignSelf: 'center' }} 
+        />    </ThemedView>
   );
 }
+
+const localstyle = StyleSheet.create({
+  container: {
+    marginTop: 50,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
+    padding: 20,
+  }
+});
