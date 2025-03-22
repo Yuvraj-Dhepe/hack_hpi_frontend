@@ -44,7 +44,7 @@ export default function NoisyEnvironment() {
       <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
         <View style={styles.cardContainer}>
           <View style={styles.circleIconContainer}>
-            <ThemedText style={styles.icon}>�</ThemedText>
+            <ThemedText style={styles.icon}>📢</ThemedText>
           </View>
           
           <View style={styles.cardContent}>
