@@ -10,15 +10,15 @@ export default function BottomNav() {
 
   return (
     <View style={styles.bottomNav}>
-      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('start')}>
         <Feather name="home" size={24} color="#000" />
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.mainNavButton} onPress={() => navigation.navigate('Explore')}>
+      <TouchableOpacity style={styles.mainNavButton} onPress={() => navigation.navigate('interventions')}>
       <FontAwesome5 name="lightbulb" size={24} color="#fff" />
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('profile')}>
         <Feather name="user" size={24} color="#000" />
       </TouchableOpacity>
     </View>

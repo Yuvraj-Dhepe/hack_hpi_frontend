@@ -152,4 +152,9 @@ barContainer: {
         justifyContent: 'center',
         alignItems: 'center',
       },
+      profileDetails: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: 10,
+      },
 });
