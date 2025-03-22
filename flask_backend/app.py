@@ -99,7 +99,23 @@ def get_analysis():
         database_pull = pd.read_csv(regular_filepath)
         if os.path.exists(feedback_filepath):
             feedback_data = pd.read_csv(feedback_filepath)
+            # Ensure all columns exist in both dataframes
+            for col in database_pull.columns:
+                if col not in feedback_data.columns:
+                    feedback_data[col] = None
+            for col in feedback_data.columns:
+                if col not in database_pull.columns:
+                    database_pull[col] = None
+            
+            # Combine the data
             database_pull = pd.concat([database_pull, feedback_data], ignore_index=True)
+            
+            # Sort by timestamp to ensure proper ordering
+            database_pull = database_pull.sort_values('timestamp')
+            
+            # Convert is_private to boolean, handling NaN values
+            database_pull['is_private'] = database_pull['is_private'].fillna(False)
+            database_pull['is_private'] = database_pull['is_private'].astype(bool)
 
         print(f"Found {len(database_pull)} total records in database")
 

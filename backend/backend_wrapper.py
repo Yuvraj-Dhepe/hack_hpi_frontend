@@ -80,24 +80,43 @@ def is_user_private(user_data):
     Returns:
     bool: True if the last observation of "is_private" is True, False otherwise.
     """
-    # Temporary fix for users who don't have a "is_private" column
-    if not 'is_private' in user_data.columns:
+    # Sort by timestamp to get the most recent privacy setting
+    user_data_sorted = user_data.sort_values(by='timestamp', ascending=True)
+    
+    # If no is_private column or all values are NaN, return False
+    if 'is_private' not in user_data_sorted.columns or user_data_sorted['is_private'].isna().all():
         return False
     
-    user_data_sorted = user_data.sort_values(by='timestamp', ascending=True)
-    return bool(user_data_sorted['is_private'].iloc[-1] == True)
+    # Get the last non-null value of is_private
+    last_private = user_data_sorted['is_private'].dropna().iloc[-1]
+    return bool(last_private == True)
 
 def extract_user_reg_data(user_data):
     """
     Extract the outcome, covariates, and treatment indicators from the user data.
     Now incorporates feedback when available.
     """
-    # Use feedback as outcome when available, otherwise use tinnitus-initial
-    Y = user_data['feedback'].values if 'feedback' in user_data.columns else user_data['tinnitus-initial'].values
+    # Sort data by timestamp to ensure proper ordering
+    user_data = user_data.sort_values(by='timestamp', ascending=True)
+    
+    # Initialize Y array
+    Y = np.array([])
+    
+    # If feedback exists, use it as outcome
+    if 'feedback' in user_data.columns:
+        feedback_mask = ~pd.isna(user_data['feedback'])
+        if feedback_mask.any():
+            Y = user_data.loc[feedback_mask, 'feedback'].values.astype(float)  # Convert to float
+            # Only use corresponding rows for covariates and treatments
+            user_data = user_data[feedback_mask]
+    
+    # If no feedback available or all NaN, fall back to tinnitus-initial
+    if len(Y) == 0:
+        Y = user_data['tinnitus-initial'].values.astype(float)  # Convert to float
 
-    # Extract the covariates
-    covariate_cols = ['stress', 'sleep', 'noise', 'intoxication', 'location']
-    X = user_data[covariate_cols].values  # shape (N, K)
+    # Extract the covariates - handle categorical variables
+    covariate_cols = ['stress', 'sleep', 'noise']
+    X = user_data[covariate_cols].values.astype(float)  # Convert numeric columns to float
 
     # Create treatment indicators based on the location
     D = np.zeros((len(user_data), 6))  # shape (N, 6)
