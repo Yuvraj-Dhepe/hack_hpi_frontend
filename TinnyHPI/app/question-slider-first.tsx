@@ -1,53 +1,52 @@
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { router } from 'expo-router';
+import Slider from '@react-native-community/slider';
 import { storeQuestionData } from '@/utils/helpers';
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 
-export default function YesNoQuestionScreen() {
-  const [answer, setAnswer] = useState<string | null>(null);
+export default function FirstSliderQuestionScreen() {
+  const [sliderValue, setSliderValue] = useState(3);
   
   const handleSave = async () => {
     // Save the response to AsyncStorage temporarily
-    await storeQuestionData('question_x2', answer);
-    console.log('Yes/No answer saved:', answer);
+    await storeQuestionData('question_y1', sliderValue);
+    console.log('First slider value saved:', sliderValue);
     
-    // Navigate to the last slider question
-    router.push('/question-slider-last');
+    // Navigate to the next question
+    router.push('/question-slider');
   };
-  
   return (
     <ThemedView style={styles.container}>
       <View style={styles.card}>
         <ThemedText type="title" style={styles.questionTitle}>
-          Did you experience any stressful events today?
+          How would you rate your overall health today?
         </ThemedText>
         
-        <View style={styles.buttonGroup}>
-          <TouchableOpacity
-            style={[styles.answerButton, answer === 'yes' && styles.selectedButton]}
-            onPress={() => setAnswer('yes')}
-          >
-            <ThemedText style={styles.buttonText}>Yes</ThemedText>
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={[styles.answerButton, answer === 'no' && styles.selectedButton]}
-            onPress={() => setAnswer('no')}
-          >
-            <ThemedText style={styles.buttonText}>No</ThemedText>
-          </TouchableOpacity>
+        <View style={styles.sliderContainer}>
+          <ThemedText style={styles.sliderLabel}>Poor</ThemedText>
+          <Slider
+            style={styles.slider}
+            minimumValue={1}
+            maximumValue={5}
+            value={sliderValue}
+            onValueChange={setSliderValue}
+            minimumTrackTintColor="#A1CEDC"
+            maximumTrackTintColor="#D0D0D0"
+            thumbTintColor="#1D3D47"
+          />
+          <ThemedText style={styles.sliderLabel}>Excellent</ThemedText>
+        </View>
+        
+        <View style={styles.valueContainer}>
+          <ThemedText style={styles.valueText}>{sliderValue.toFixed(1)}</ThemedText>
         </View>
       </View>
       
-      <TouchableOpacity 
-        style={[styles.saveButton, !answer && styles.disabledButton]}
-        onPress={handleSave}
-        disabled={!answer}
-      >
-        <ThemedText style={styles.saveButtonText}>Save & Continue</ThemedText>
+      <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <ThemedText style={styles.buttonText}>Save & Continue</ThemedText>
       </TouchableOpacity>
     </ThemedView>
   );
@@ -78,23 +77,32 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     color: '#1D3D47',
   },
-  buttonGroup: {
+  sliderContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  answerButton: {
-    flex: 1,
-    backgroundColor: '#E0E0E0',
-    padding: 20,
-    borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  slider: {
+    flex: 1,
+    height: 40,
     marginHorizontal: 10,
   },
-  selectedButton: {
-    backgroundColor: '#A1CEDC',
+  sliderLabel: {
+    fontSize: 14,
+    color: '#4A4A4A',
   },
-  buttonText: {
-    fontSize: 18,
+  valueContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#A1CEDC',
+    alignSelf: 'center',
+  },
+  valueText: {
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#1D3D47',
   },
@@ -107,10 +115,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     width: '100%',
   },
-  disabledButton: {
-    opacity: 0.5,
-  },
-  saveButtonText: {
+  buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#1D3D47',

@@ -37,9 +37,19 @@ export default function HomeScreen() {
   };
   
   const handleProceed = () => {
-    router.push('/question-slider');
+    router.push('/question-slider-first');
   };
-  
+
+  const resetUserData = async () => {
+    try {
+      await AsyncStorage.removeItem('userInfo');
+      await AsyncStorage.removeItem('setupComplete');
+      router.replace('/initial-setup');
+    } catch (error) {
+      console.error('Failed to reset user data:', error);
+    }
+  };
+
   return (
     <ThemedView style={styles.container}>
       <View style={styles.userIconContainer}>
@@ -56,6 +66,10 @@ export default function HomeScreen() {
       
       <TouchableOpacity style={styles.proceedButton} onPress={handleProceed}>
         <ThemedText style={styles.buttonText}>Proceed</ThemedText>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.resetButton} onPress={resetUserData}>
+        <ThemedText style={styles.resetButtonText}>Reset Data</ThemedText>
       </TouchableOpacity>
     </ThemedView>
   );
@@ -100,5 +114,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#1D3D47',
+  },
+  resetButton: {
+    backgroundColor: '#E57373',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  resetButtonText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
 });

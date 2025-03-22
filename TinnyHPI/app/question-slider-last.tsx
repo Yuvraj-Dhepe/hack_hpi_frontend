@@ -1,35 +1,74 @@
-import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import { router } from 'expo-router';
 import Slider from '@react-native-community/slider';
-import { storeQuestionData } from '@/utils/helpers';
+import { 
+  storeQuestionData, 
+  getUserInfo, 
+  getQuestionData, 
+  generateUID,
+  clearQuestionData 
+} from '@/utils/helpers';
+import { saveQuestionnaireResponse } from '@/utils/database';
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 
-export default function QuestionSliderScreen() {
+export default function LastSliderQuestionScreen() {
   const [sliderValue, setSliderValue] = useState(3);
   
   const handleSave = async () => {
-    // Save the response to AsyncStorage temporarily
-    await storeQuestionData('question_x1', sliderValue);
-    console.log('Slider value saved:', sliderValue);
-    
-    // Navigate to the next question
-    router.push('/question-yesno');
+    try {
+      // Save the last response to AsyncStorage temporarily
+      await storeQuestionData('question_y2', sliderValue);
+      console.log('Last slider value saved:', sliderValue);
+      
+      // Get all the stored question data
+      const userInfo = await getUserInfo();
+      if (!userInfo || !userInfo.name) {
+        Alert.alert('Error', 'User information not found. Please set up your profile first.');
+        router.replace('/initial-setup');
+        return;
+      }
+      
+      const uid = await generateUID(userInfo.name);
+      const y1 = await getQuestionData('question_y1');
+      const x1 = await getQuestionData('question_x1');
+      const x2 = await getQuestionData('question_x2');
+      const y2 = sliderValue;
+      
+      // Save all data to SQLite
+      await saveQuestionnaireResponse({
+        uid,
+        timestamp: new Date().toISOString(),
+        age: userInfo.age,
+        sex: userInfo.sex,
+        y1,
+        x1,
+        x2,
+        y2
+      });
+      
+      // Clear temporary data
+      await clearQuestionData();
+      
+      // Navigate to the results page
+      router.push('/results');
+    } catch (error) {
+      console.error('Error saving questionnaire data:', error);
+      Alert.alert('Error', 'Failed to save your responses. Please try again.');
+    }
   };
-  
-  // Rest of the component remains the same
   
   return (
     <ThemedView style={styles.container}>
       <View style={styles.card}>
         <ThemedText type="title" style={styles.questionTitle}>
-          How severe is your tinnitus today?
+          How would you rate your tinnitus-related stress today?
         </ThemedText>
         
         <View style={styles.sliderContainer}>
-          <ThemedText style={styles.sliderLabel}>Mild</ThemedText>
+          <ThemedText style={styles.sliderLabel}>Low</ThemedText>
           <Slider
             style={styles.slider}
             minimumValue={1}
@@ -40,7 +79,7 @@ export default function QuestionSliderScreen() {
             maximumTrackTintColor="#D0D0D0"
             thumbTintColor="#1D3D47"
           />
-          <ThemedText style={styles.sliderLabel}>Severe</ThemedText>
+          <ThemedText style={styles.sliderLabel}>High</ThemedText>
         </View>
         
         <View style={styles.valueContainer}>
@@ -49,7 +88,7 @@ export default function QuestionSliderScreen() {
       </View>
       
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-        <ThemedText style={styles.buttonText}>Save & Continue</ThemedText>
+        <ThemedText style={styles.buttonText}>Save & Complete</ThemedText>
       </TouchableOpacity>
     </ThemedView>
   );
