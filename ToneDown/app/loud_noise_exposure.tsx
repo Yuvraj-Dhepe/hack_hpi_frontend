@@ -32,7 +32,7 @@ export default function LoudNoiseExposure() {
             title="" 
             value={selectedExposure} 
             setValue={setSelectedExposure} 
-            inputType="buttons" 
+            inputType="buttonsWider" 
             options={exposureOptions}
           />
         </View>

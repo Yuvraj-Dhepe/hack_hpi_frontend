@@ -91,14 +91,6 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       width: '60%',
   },
-  optionButton: {
-      backgroundColor: COLORS.offwhite,
-      padding: 15,
-      margin: 5,
-      borderRadius: 25,
-      alignItems: 'center',
-      width: '35%',
-  },
     buttonGroupWide: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -109,19 +101,43 @@ export const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 15,
         alignItems: 'center',
-        width: '45%',
+        width: '65%',
     },
-    optionButtonWide: {
-        backgroundColor: COLORS.offwhite,
-        padding: 15,
-        margin: 5,
-        borderRadius: 25,
-        alignItems: 'center',
-        width: '30%',
-    },
-    optionButtonSelected: {
-        backgroundColor: COLORS.yellow,
-    },
+    optionButton: {
+      backgroundColor: COLORS.beige, // More visually appealing
+      paddingVertical: 12, // Adjust vertical padding for better fit
+      paddingHorizontal: 20, // Ensures text doesn't get cut off
+      margin: 5,
+      borderRadius: 30, // Slightly larger for smoother look
+      alignItems: 'center',
+      minWidth: 100, // Ensure text has enough space
+      justifyContent: 'center',
+      borderWidth: 2,
+      borderColor: COLORS.darkYellow, // More contrast
+  },
+  
+  optionButtonWide: {
+      backgroundColor: COLORS.beige,
+      paddingVertical: 12,
+      paddingHorizontal: 25,
+      margin: 5,
+      borderRadius: 30,
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '40%', // Adjusted for better proportion
+      borderWidth: 2,
+      borderColor: COLORS.darkbeige,
+  },
+  optionButtonSelected: {
+      backgroundColor: COLORS.yellow, // Highlight selection
+      borderColor: COLORS.darkYellow,
+      borderWidth: 4, // More emphasis when selected
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.15,
+      shadowRadius: 4,
+      elevation: 4,
+  },
     intervention: {
         fontSize: 18,
         marginBottom: 10,

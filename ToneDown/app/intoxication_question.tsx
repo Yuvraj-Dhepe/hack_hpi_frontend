@@ -131,13 +131,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
+    marginTop: 20,
     alignItems: 'center',
-    marginTop: 40,
-  },
-  button: {
-    minWidth: 200,
-    backgroundColor: COLORS.beige,
-  },
+    justifyContent: 'center',
+},
   buttonDisabled: {
     opacity: 0.5,
   }
