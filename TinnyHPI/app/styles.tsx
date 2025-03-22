@@ -26,6 +26,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: COLORS.background,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontFamily: 'Poppins_400Regular',
@@ -80,7 +82,7 @@ export const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 15,
         alignItems: 'center',
-        width: '45%',
+        width: '60%',
     },
     optionButton: {
         backgroundColor: COLORS.offwhite,
@@ -88,7 +90,7 @@ export const styles = StyleSheet.create({
         margin: 5,
         borderRadius: 25,
         alignItems: 'center',
-        width: '16%',
+        width: '35%',
     },
     buttonGroupWide: {
         flexDirection: 'row',
@@ -116,16 +118,16 @@ export const styles = StyleSheet.create({
     intervention: {
         fontSize: 18,
         marginBottom: 10,
-      },
-      barContainer: {
+    },
+    barContainer: {
         backgroundColor: COLORS.beige, // Change the color of the bar container as needed
         borderRadius: 5,
         height: 20,
         marginBottom: 10,
         overflow: 'hidden', // Ensures the bar does not overflow
-      },
-      bar: {
+    },
+    bar: {
         backgroundColor: COLORS.red, // Change the color of the bar as needed
         height: '100%',
-      },
+    },
 });

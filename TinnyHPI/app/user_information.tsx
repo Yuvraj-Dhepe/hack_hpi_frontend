@@ -16,7 +16,7 @@ export default function UserInformation() {
   const [sex, setSex] = useState('');
 
     return (
-        <ThemedView style={styles.container}>
+        <ThemedView style={localStyle.container}>
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title" style={styles.title}>
               Please Enter your
@@ -41,3 +41,14 @@ export default function UserInformation() {
         
     );
 }
+
+const localStyle = StyleSheet.create({
+  container: {
+    marginTop: 100,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
+    padding: 20,
+  }
+});

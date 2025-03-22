@@ -66,3 +66,14 @@ export default function Results() {
     </ThemedView>
   );
 }
+
+const localStyle = StyleSheet.create({
+  container: {
+    marginTop: 150,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
+    padding: 20,
+  }
+});
