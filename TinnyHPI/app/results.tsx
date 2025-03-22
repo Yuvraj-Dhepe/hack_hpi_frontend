@@ -4,6 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import { styles, COLORS } from './styles';
+import { Float } from 'react-native/Libraries/Types/CodegenTypes';
 
 export default function Results() {
   const [intervention1, setIntervention1] = useState('Intervention A');
@@ -29,7 +30,7 @@ export default function Results() {
     fetchProbabilities();
   }, []);
 
-  const renderProbabilityBar = (probability) => {
+  const renderProbabilityBar = (probability:Float) => {
     return (
       <View style={styles.barContainer}>
         <View style={[styles.bar, { width: `${probability * 100}%` }]} />
@@ -66,14 +67,3 @@ export default function Results() {
     </ThemedView>
   );
 }
-
-const localStyle = StyleSheet.create({
-  container: {
-    marginTop: 150,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: COLORS.background,
-    padding: 20,
-  }
-});

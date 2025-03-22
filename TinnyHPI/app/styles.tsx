@@ -119,15 +119,17 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
     },
-    barContainer: {
-        backgroundColor: COLORS.beige, // Change the color of the bar container as needed
-        borderRadius: 5,
-        height: 20,
-        marginBottom: 10,
-        overflow: 'hidden', // Ensures the bar does not overflow
+barContainer: {
+    backgroundColor: COLORS.beige, // Color for the bar container
+    borderRadius: 5,
+    height: 20,
+    marginBottom: 10,
+    overflow: 'hidden', // Ensures the bar does not overflow
+    borderWidth:0, // Debug border
+    width: '100%',
     },
     bar: {
-        backgroundColor: COLORS.red, // Change the color of the bar as needed
-        height: '100%',
+    backgroundColor: COLORS.green, // Change the color of the bar to green for better visibility
+    height: '100%',
     },
 });
