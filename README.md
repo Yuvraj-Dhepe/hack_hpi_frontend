@@ -1,17 +1,17 @@
-# ToneDown: Personalized Tinnitus Intervention App
+# ToneDown: Personalized Tinnitus Intervention App 🎧
 
-ToneDown is an innovative mobile application designed to help individuals manage tinnitus through personalized interventions. The app uses advanced statistical modeling to learn from user feedback and provide increasingly effective intervention recommendations over time.
-
-## Project Overview
-
-ToneDown consists of three main components:
-1. **React Native Frontend**: A cross-platform mobile application built with Expo
-2. **Flask Backend**: A Python-based API server for data processing and analysis
-3. **Statistical Modeling**: Bayesian hierarchical models for personalized intervention recommendations
+> ToneDown is an innovative mobile application designed to help individuals manage tinnitus through personalized interventions. The app uses advanced statistical modeling to learn from user feedback and provide increasingly effective intervention recommendations over time.
 
 [![ToneDown Demo](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
 
-## Project Setup
+## 📱 Project Overview
+
+ToneDown consists of three main components:
+- **React Native Frontend**: A cross-platform mobile application built with Expo
+- **Flask Backend**: A Python-based API server for data processing and analysis
+- **Statistical Modeling**: Bayesian hierarchical models for personalized intervention recommendations
+
+## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js (v16+)
@@ -33,7 +33,12 @@ npm install
 npx expo start
 ```
 
+> **Note**: After starting the Expo server, you can run the app on your physical device by scanning the QR code with the Expo Go app.
+
 ### Backend Setup
+<details>
+<summary>Click to expand backend setup instructions</summary>
+
 ```bash
 # Create and activate a conda environment
 conda env create -f hack_hpi_frontend/flask_backend/environment.yml
@@ -50,8 +55,12 @@ pip install -r hack_hpi_frontend/flask_backend/requirements.txt
 cd hack_hpi_frontend/flask_backend
 python app.py
 ```
+</details>
 
 ### CmdStan Setup (for Statistical Modeling)
+<details>
+<summary>Click to expand statistical modeling setup</summary>
+
 ```bash
 # Install build tools if needed
 sudo apt-get update
@@ -60,56 +69,78 @@ sudo apt-get install -y build-essential make g++
 # Install CmdStan
 python -m cmdstanpy.install_cmdstan --cores 1 --verbose
 ```
+</details>
 
-## Project Components
+## 🧩 Project Components
 
 ### 1. React Native Frontend
 
-The frontend is built with React Native and Expo, providing a cross-platform mobile experience. Key features include:
+> The frontend provides a seamless cross-platform mobile experience for tinnitus management.
+
+<details>
+<summary>Key Features</summary>
 
 - **User Profiles**: Personalized experience with user data storage
 - **Tinnitus Assessment**: Questionnaires to evaluate tinnitus severity and characteristics
 - **Intervention Recommendations**: Display of personalized intervention suggestions
 - **Feedback Collection**: Gathering user feedback on intervention effectiveness
 - **Privacy Controls**: Options for users to control data sharing
+</details>
 
-#### Key Technologies:
+<details>
+<summary>Key Technologies</summary>
+
 - React Native with Expo
 - Expo Router for navigation
 - AsyncStorage for local data persistence
 - Expo Secure Store for sensitive data
+</details>
 
 ### 2. Flask Backend
 
-The Flask backend serves as the API layer between the frontend and the statistical models. It handles:
+> The Flask backend serves as the API layer between the frontend and the statistical models.
+
+<details>
+<summary>Key Features</summary>
 
 - **Data Processing**: Cleaning and preparing user data for analysis
 - **API Endpoints**: RESTful endpoints for data submission and retrieval
 - **Integration**: Connecting the frontend with the statistical models
 - **Data Storage**: Managing user data and intervention history
+</details>
 
-#### Key Technologies:
+<details>
+<summary>Key Technologies</summary>
+
 - Flask web framework
 - Flask-CORS for cross-origin resource sharing
 - Pandas for data manipulation
 - JSON for data exchange
+</details>
 
 ### 3. Statistical Modeling
 
-The statistical component uses Bayesian hierarchical models to provide personalized intervention recommendations:
+> The statistical component uses Bayesian hierarchical models to provide personalized intervention recommendations.
+
+<details>
+<summary>Key Features</summary>
 
 - **Single-User Sampling**: Analyzing individual user data to determine effective interventions
 - **Hierarchical Sampling**: Learning across users to improve recommendations
 - **Posterior Probability Calculation**: Determining the most likely effective interventions
 - **Adaptive Learning**: Improving recommendations over time based on feedback
+</details>
 
-#### Key Technologies:
+<details>
+<summary>Key Technologies</summary>
+
 - CmdStan for Bayesian inference
 - Stan modeling language
 - Python wrappers for model integration
 - Pandas for data handling
+</details>
 
-## App Gallery
+## 📸 App Gallery
 
 <table>
   <tr>
@@ -118,9 +149,9 @@ The statistical component uses Bayesian hierarchical models to provide personali
     <td><img src="path/to/screenshot3.png" width="200" alt="Profile Page"/></td>
   </tr>
   <tr>
-    <td>Welcome Screen</td>
-    <td>Home Screen</td>
-    <td>Profile Page</td>
+    <td align="center">Welcome Screen</td>
+    <td align="center">Home Screen</td>
+    <td align="center">Profile Page</td>
   </tr>
   <tr>
     <td><img src="path/to/screenshot4.png" width="200" alt="Tinnitus Assessment"/></td>
@@ -128,23 +159,13 @@ The statistical component uses Bayesian hierarchical models to provide personali
     <td><img src="path/to/screenshot6.png" width="200" alt="Results Page"/></td>
   </tr>
   <tr>
-    <td>Tinnitus Assessment</td>
-    <td>Intervention Selection</td>
-    <td>Results Page</td>
-  </tr>
-  <tr>
-    <td><img src="path/to/screenshot7.png" width="200" alt="Music Therapy"/></td>
-    <td><img src="path/to/screenshot8.png" width="200" alt="Feedback Form"/></td>
-    <td><img src="path/to/screenshot9.png" width="200" alt="Settings"/></td>
-  </tr>
-  <tr>
-    <td>Music Therapy</td>
-    <td>Feedback Form</td>
-    <td>Settings</td>
+    <td align="center">Tinnitus Assessment</td>
+    <td align="center">Intervention Selection</td>
+    <td align="center">Results Page</td>
   </tr>
 </table>
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 hack_hpi_frontend/
@@ -164,15 +185,16 @@ hack_hpi_frontend/
     └── hier_reg.stan          # Stan model definition
 ```
 
-## Meet the Team
+## 👥 Contributors
 
-- [Belena Zwadsich](https://github.com/BelanaZ)
-- [Till Zemann](https://github.com/till2)
-- [Yuvraj Dhepe](https://github.com/Yuvraj-Dhepe)
-- [Fynn Kroeger](https://github.com/fynnkroeger)
-- [Lasse Meixner](https://github.com/lasse-meixner)
-- [Isabel Kurth](https://github.com/IsabelKurth)
+- [Contributor 1](https://github.com/contributor1)
+- [Contributor 2](https://github.com/contributor2)
+- [Contributor 3](https://github.com/contributor3)
 
-## License
+## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+> **Note**: For any questions or issues, please open an issue in this repository.
