@@ -8,7 +8,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Hello <b>Sara</b>!</Text>
       <Text style={styles.text}>Welcome to ToneDown!</Text>
-      <Link href="/questionaire">
+      <Link href="/tinnitus_question">
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Intervention</Text>
         </TouchableOpacity>
