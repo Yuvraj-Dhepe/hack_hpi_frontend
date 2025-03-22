@@ -76,7 +76,7 @@ export default function Question({ title, value, setValue, inputType, options }:
 
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.title}>{title}</ThemedText>
+      <ThemedText style={styles.subtitle}>{title}</ThemedText>
       {renderInput()}
     </View>
   );

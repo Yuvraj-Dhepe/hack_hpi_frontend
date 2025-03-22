@@ -36,6 +36,11 @@ export const styles = StyleSheet.create({
     fontWeight: 'thin',
     color: COLORS.textPrimary,
   },
+  subtitle:{
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 18,
+    color: COLORS.textPrimary,
+  },
   titleBold: {
     fontFamily: 'Poppins_400Regular',
     fontWeight: 'bold',
