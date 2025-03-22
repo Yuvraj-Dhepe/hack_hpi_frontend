@@ -5,6 +5,8 @@ import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import Slider from '@react-native-community/slider';
 import { styles as globalStyles, COLORS } from './styles';
+import BottomNav from './BottomNav'; // Import BottomNav
+
 
 export default function TinnitusQuestion() {
   const [sliderValue, setSliderValue] = useState(3);
@@ -20,7 +22,9 @@ export default function TinnitusQuestion() {
   };
 
   return (
-    <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
+    <ThemedView style={{height: '100%'}}>
+          <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
+
       {/* Main card with circular icon overlay */}
       <View style={styles.cardContainer}>
         {/* Circular icon that overlaps the top of the card */}
@@ -89,6 +93,11 @@ export default function TinnitusQuestion() {
           </TouchableOpacity>
         </Link>
       </View>
+      </ThemedView>
+
+
+                    <BottomNav /> {/* Include BottomNav */}
+      
     </ThemedView>
   );
 }

@@ -5,6 +5,8 @@ import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import Slider from '@react-native-community/slider';
 import { styles as globalStyles, COLORS } from './styles';
+import BottomNav from './BottomNav'; // Import BottomNav
+
 
 export default function StressQuestion() {
   const [sliderValue, setSliderValue] = useState(3);
@@ -20,6 +22,7 @@ export default function StressQuestion() {
   };
 
   return (
+    <View style={{"height": "100%"}}>
     <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
       <View style={styles.cardContainer}>
         <View style={styles.circleIconContainer}>
@@ -86,6 +89,8 @@ export default function StressQuestion() {
         </Link>
       </View>
     </ThemedView>
+    <BottomNav />
+    </View>
   );
 }
 
