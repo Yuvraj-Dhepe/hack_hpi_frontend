@@ -5,12 +5,14 @@ import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import Question from './utility';
+import BottomNav from './BottomNav';
 
 export default function LoudNoiseExposure() {
   const [selectedExposure, setSelectedExposure] = useState('');
   const exposureOptions = ["Yes", "No"];
 
   return (
+    <View style={{height:'100%'}}>
     <ThemedView style={[globalStyles.container, styles.centeredContainer]}>
       <View style={styles.cardContainer}>
         <View style={styles.circleIconContainer}>
@@ -30,7 +32,7 @@ export default function LoudNoiseExposure() {
             title="" 
             value={selectedExposure} 
             setValue={setSelectedExposure} 
-            inputType="button" 
+            inputType="buttons" 
             options={exposureOptions}
           />
         </View>
@@ -46,7 +48,10 @@ export default function LoudNoiseExposure() {
           </TouchableOpacity>
         </Link>
       </View>
+      
     </ThemedView>
+    <BottomNav />
+    </View>
   );
 }
 
