@@ -1,1 +1,0 @@
-npm install @expo/vector-icons
