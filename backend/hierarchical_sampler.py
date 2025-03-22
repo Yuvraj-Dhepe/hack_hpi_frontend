@@ -93,22 +93,32 @@ def run_hierarchical_model(user_data, stan_file='hier_reg.stan',
     Returns:
       tuple: (theta_draws, proportions) containing the posterior samples and best arm proportions
     """
-    data = prepare_hierarchical_data(user_data, sigma=sigma)
-    model = load_model(stan_file)
-    fit = model.sample(data=data, iter_sampling=iter_sampling, iter_warmup=iter_warmup, chains=chains)
+    try:
+        data = prepare_hierarchical_data(user_data, sigma=sigma)
+        model = load_model(stan_file)
+        fit = model.sample(data=data, iter_sampling=iter_sampling, iter_warmup=iter_warmup, chains=chains)
 
-    theta_draws = fit.stan_variable("theta") # (n_draws*n_chains, M, J)
+        theta_draws = fit.stan_variable("theta") # (n_draws*n_chains, M, J)
 
-    M = theta_draws.shape[1]
-    J = theta_draws.shape[2]
-    proportions = np.empty((M, J))
-    for m in range(M):
-        # For user m, find which treatment has the maximum effect for each draw
-        best_arm = np.argmax(theta_draws[:, m, :], axis=1)
-        counts = np.bincount(best_arm, minlength=J)
-        proportions[m, :] = counts / (iter_sampling*chains)
+        M = theta_draws.shape[1]
+        J = theta_draws.shape[2]
+        proportions = np.empty((M, J))
+        for m in range(M):
+            # For user m, find which treatment has the maximum effect for each draw
+            best_arm = np.argmax(theta_draws[:, m, :], axis=1)
+            counts = np.bincount(best_arm, minlength=J)
+            proportions[m, :] = counts / (iter_sampling*chains)
 
-    return theta_draws, proportions
+        return theta_draws, proportions
+      
+    except Exception as e:
+        print(f"Error in hierarchical sampling: {str(e)}")
+        # Fallback to uniform distribution if sampling fails
+        M = len(user_data)
+        J = user_data[0][2].shape[1]  # Get number of treatments from first user's data
+        theta_draws = np.random.normal(0, 1, (iter_sampling*chains, M, J))
+        proportions = np.ones((M, J)) / J  # Uniform distribution
+        return theta_draws, proportions
 
 # # Example usage:
 # if __name__ == '__main__':

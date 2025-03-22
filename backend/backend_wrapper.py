@@ -11,8 +11,8 @@ import pandas as pd
 import json
 
 # MODEL FUNCTION IMPORTS
-from single_user_sampler import draw_posterior_theta
-from hierarchical_sampler import run_hierarchical_model
+from backend.single_user_sampler import draw_posterior_theta
+from backend.hierarchical_sampler import run_hierarchical_model
 
 # AUXILIARY FUNCTIONS
 def ecdf_transform(x, data):
@@ -80,6 +80,10 @@ def is_user_private(user_data):
     Returns:
     bool: True if the last observation of "is_private" is True, False otherwise.
     """
+    # Temporary fix for users who don't have a "is_private" column
+    if not 'is_private' in user_data.columns:
+        return False
+    
     user_data_sorted = user_data.sort_values(by='timestamp', ascending=True)
     return bool(user_data_sorted['is_private'].iloc[-1] == True)
 
@@ -94,30 +98,65 @@ def extract_user_reg_data(user_data):
     tuple: A tuple containing the outcome array Y, covariates matrix X, and treatment matrix D.
     """
     # Create the outcome by Gaussianizing the difference between after (y2) and before (y1)
-    y1 = user_data['y1'].values  # shape (N,)
-    y2 = user_data['y2'].values  # shape (N,)
-    Y = compute_gaussian_outcome(y1, y2)  # returns a numpy array of shape (N,)
+    # For now, we'll use the tinnitus-initial value as our outcome
+    Y = user_data['tinnitus-initial'].values  # shape (N,)
 
-    # Extract the covariates: assume the covariate columns start with 'x'
-    covariate_cols = [col for col in user_data.columns if col.startswith('x')]
+    # Extract the covariates
+    covariate_cols = ['stress', 'sleep', 'noise', 'intoxication', 'location']
     X = user_data[covariate_cols].values  # shape (N, K)
 
-    # Extract the treatment indicator columns: assume these columns start with 'd'
-    treatment_cols = [col for col in user_data.columns if col.startswith('d')]
-    D = user_data[treatment_cols].values  # shape (N, J)
+    # Create treatment indicators (d1, d2, d3, d4, d5, d6) based on the data
+    # For now, we'll create a simple one-hot encoding based on the location
+    D = np.zeros((len(user_data), 6))  # shape (N, 6)
+    location_mapping = {
+        'Home': 0,
+        'Work': 1,
+        'Other': 2
+    }
+    for i, location in enumerate(user_data['location']):
+        if location in location_mapping:
+            D[i, location_mapping[location]] = 1
+        else:
+            # Default to first treatment if location is unknown
+            D[i, 0] = 1
 
     return Y, X, D
 
 def format_posterior_best_json(user_posterior_best):
-    # Create a JSON dictionary with keys 'd1', 'd2', ... 'dJ'
-    posterior_best_dict = {f"d{i+1}": float(user_posterior_best[i]) for i in range(user_posterior_best.shape[0])}
-    posterior_best_json = json.dumps(posterior_best_dict)
-    return posterior_best_json
+    """
+    Format the posterior probabilities into a JSON dictionary.
+    Maps treatment indices to intervention names and sorts by probability.
+    """
+    # Define intervention names
+    interventions = {
+        "Take a walk": 0,
+        "Listen to calming music": 1,
+        "Deep breathing exercise": 2,
+        "Mindfulness meditation": 3,
+        "Progressive muscle relaxation": 4,
+        "White noise": 5
+    }
+    
+    # Clip values to be between 0 and 1
+    probabilities = np.clip(user_posterior_best, 0, 1)
+    probabilities = np.round(probabilities, 3)
+    
+    # Create list of (intervention_name, probability) tuples
+    prob_pairs = [
+        (name, float(probabilities[idx]))
+        for name, idx in interventions.items()
+    ]
+    
+    # Sort by probability in descending order
+    prob_pairs.sort(key=lambda x: x[1], reverse=True)
+    
+    # Create dictionary with sorted interventions
+    return {name: prob for name, prob in prob_pairs}
 
 # MAIN ENTRY POINT
 def backend_call(user_id, database_pull):
     # get user data
-    user_data = database_pull[database_pull['userid'] == user_id]
+    user_data = database_pull[database_pull['uid'] == user_id]
 
     # CHECK IF last observation of "is_private" is False
     is_private = is_user_private(user_data)
@@ -134,8 +173,8 @@ def backend_call(user_id, database_pull):
     # if user is in shared-data mode, pass his data "first" and append the rest, run hierarchical_sampler, and get draws and posterior_best_json for the user
     else:
         group_data = []
-        for p in database_pull['userid'].unique():
-            other_user_data = database_pull[database_pull['userid'] == p]
+        for p in database_pull['uid'].unique():
+            other_user_data = database_pull[database_pull['uid'] == p]
             if (p != user_id) and (not is_user_private(other_user_data)):
                 group_data.append(extract_user_reg_data(other_user_data))
         group_data.append(extract_user_reg_data(user_data))
@@ -159,7 +198,7 @@ if __name__ == "__main__":
     n_observations = 10
     
     example_data = {
-        'userid': np.repeat(['user1', 'user2', 'user3'], n_observations),
+        'uid': np.repeat(['user1', 'user2', 'user3'], n_observations),
         'timestamp': np.tile(pd.date_range(start='2024-01-01', periods=n_observations), n_users),
         'is_private': np.repeat([False, True, False], n_observations),
         'y1': np.random.normal(0, 1, n_users * n_observations),

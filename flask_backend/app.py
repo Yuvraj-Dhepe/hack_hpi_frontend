@@ -4,6 +4,9 @@ import pandas as pd
 from flask_cors import CORS
 from io import StringIO
 import datetime
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from backend.backend_wrapper import backend_call
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -70,21 +73,49 @@ def upload_csv():
 @app.route('/api/get-analysis', methods=['GET'])
 def get_analysis():
     try:
-        # Return mock diagnosis probabilities
-        diagnosis_probabilities = {
-            "d1": 0.65,
-            "d2": 0.21,
-            "d3": 0.05,
-            "d4": 0.13,
-            "d5": 0.10,
-            "d6": 0.17
-        }
+        # Get user_id from query parameters
+        user_id = request.args.get('user_id')
+        if not user_id:
+            print("Error: No user_id provided in request")
+            return jsonify({
+                'error': 'No user_id provided',
+                'message': 'Please provide a user_id as a query parameter'
+            }), 400
+
+        print(f"Processing analysis request for user: {user_id}")
+
+        # Read the CSV file containing all user data
+        filepath = os.path.join(UPLOAD_DIR, "tinnitus_data.csv")
+        if not os.path.exists(filepath):
+            print(f"Error: No data file found at {filepath}")
+            return jsonify({
+                'error': 'No data available for analysis',
+                'message': 'Please upload data first'
+            }), 404
+
+        # Read the database
+        database_pull = pd.read_csv(filepath)
+        print(f"Found {len(database_pull)} records in database")
+
+        # Check if user exists in database
+        if user_id not in database_pull['uid'].values:
+            print(f"Error: User {user_id} not found in database")
+            return jsonify({
+                'error': 'User not found',
+                'message': f'No data found for user {user_id}'
+            }), 404
+
+        # Run the backend analysis
+        _, diagnosis_probabilities = backend_call(user_id, database_pull)
+        print(f"Successfully generated analysis for user {user_id}")
         
         return jsonify(diagnosis_probabilities), 200
         
     except Exception as e:
+        print(f"Error in get_analysis: {str(e)}")
         return jsonify({
-            'error': f"Analysis error: {str(e)}"
+            'error': 'Analysis error',
+            'message': str(e)
         }), 500
 
 if __name__ == '__main__':

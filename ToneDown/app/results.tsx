@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
@@ -6,6 +5,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
 import { styles as globalStyles, COLORS } from './styles';
 import BottomNav from './BottomNav';
+import { getUserData } from './storage';
 
 export default function Results() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,12 @@ export default function Results() {
     const fetchProbabilities = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('http://localhost:5000/api/get-analysis');
+        const userData = await getUserData();
+        if (!userData?.id) {
+          throw new Error('No user ID found');
+        }
+
+        const response = await fetch(`http://localhost:5000/api/get-analysis?user_id=${userData.id}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
